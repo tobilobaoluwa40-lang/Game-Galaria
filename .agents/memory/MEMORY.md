@@ -1,0 +1,1 @@
+- [Git history recovery](git-history-recovery.md) — local app history and GitHub origin can start unrelated; merge the remote history before Git pane operations.
