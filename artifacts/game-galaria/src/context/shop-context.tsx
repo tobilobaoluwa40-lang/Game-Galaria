@@ -1,5 +1,11 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { MOCK_PRODUCTS, Product } from '@/lib/data';
+import {
+  NGN_CURRENCY_VERSION,
+  NGN_DELIVERY_FEE,
+  NGN_FREE_DELIVERY_THRESHOLD,
+  migrateUsdAmountToNgn,
+} from '@/lib/currency';
 
 export interface CartItem {
   product: Product;
@@ -78,8 +84,8 @@ const defaultSettings: StoreSettings = {
   contactEmail: 'support@gamegalaria.com',
   contactPhone: '+1 (800) 555-GAME',
   address: '100 Pixel Avenue, Austin, TX',
-  deliveryFee: 15,
-  freeDeliveryThreshold: 100,
+  deliveryFee: NGN_DELIVERY_FEE,
+  freeDeliveryThreshold: NGN_FREE_DELIVERY_THRESHOLD,
   paymentInstructions: 'Bank transfer details will be sent with your order confirmation.',
   terms: 'Orders are subject to availability and confirmation by our store team.',
   privacy: 'We use customer information only to process orders and provide support.',
@@ -103,20 +109,33 @@ function migrateProductImage(image: string) {
     : image;
 }
 
-function migrateProduct(product: Product): Product {
+function migrateProduct(product: Product, shouldConvertCurrency = false): Product {
   return {
     ...product,
+    price: shouldConvertCurrency ? migrateUsdAmountToNgn(product.price) : product.price,
+    compareAtPrice: product.compareAtPrice && shouldConvertCurrency
+      ? migrateUsdAmountToNgn(product.compareAtPrice)
+      : product.compareAtPrice,
     image: migrateProductImage(product.image),
     images: product.images?.map(migrateProductImage),
   };
 }
 
-function migrateCartItems(items: CartItem[]): CartItem[] {
-  return items.map((item) => ({ ...item, product: migrateProduct(item.product) }));
+function migrateCartItems(items: CartItem[], shouldConvertCurrency = false): CartItem[] {
+  return items.map((item) => ({ ...item, product: migrateProduct(item.product, shouldConvertCurrency) }));
 }
 
-function migrateOrders(items: Order[]): Order[] {
-  return items.map((order) => ({ ...order, items: migrateCartItems(order.items) }));
+function migrateOrders(items: Order[], shouldConvertCurrency = false): Order[] {
+  return items.map((order) => ({
+    ...order,
+    total: shouldConvertCurrency ? migrateUsdAmountToNgn(order.total) : order.total,
+    items: migrateCartItems(order.items, shouldConvertCurrency),
+  }));
+}
+
+function shouldConvertStoredCurrency(key: string) {
+  return localStorage.getItem('gg_currency_version') !== NGN_CURRENCY_VERSION
+    && localStorage.getItem(key) !== null;
 }
 
 interface ShopContextType {
@@ -158,18 +177,41 @@ interface ShopContextType {
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
 export function ShopProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<Product[]>(() => stored<Product[]>('gg_products', MOCK_PRODUCTS).map(migrateProduct));
+  const [products, setProducts] = useState<Product[]>(() => {
+    const shouldConvertCurrency = shouldConvertStoredCurrency('gg_products');
+    return stored<Product[]>('gg_products', MOCK_PRODUCTS).map((product) => migrateProduct(product, shouldConvertCurrency));
+  });
   const [categories, setCategories] = useState<string[]>(() => stored('gg_categories', defaultCategories));
-  const [cart, setCart] = useState<CartItem[]>(() => migrateCartItems(stored('gg_cart', [])));
-  const [savedForLater, setSavedForLater] = useState<Product[]>(() => stored<Product[]>('gg_saved', []).map(migrateProduct));
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    const shouldConvertCurrency = shouldConvertStoredCurrency('gg_cart');
+    return migrateCartItems(stored('gg_cart', []), shouldConvertCurrency);
+  });
+  const [savedForLater, setSavedForLater] = useState<Product[]>(() => {
+    const shouldConvertCurrency = shouldConvertStoredCurrency('gg_saved');
+    return stored<Product[]>('gg_saved', []).map((product) => migrateProduct(product, shouldConvertCurrency));
+  });
   const [wishlist, setWishlist] = useState<string[]>(() => stored('gg_wishlist', []));
-  const [orders, setOrders] = useState<Order[]>(() => migrateOrders(stored('gg_orders', [])));
+  const [orders, setOrders] = useState<Order[]>(() => {
+    const shouldConvertCurrency = shouldConvertStoredCurrency('gg_orders');
+    return migrateOrders(stored('gg_orders', []), shouldConvertCurrency);
+  });
   const [customers, setCustomers] = useState<Customer[]>(() => stored('gg_customers', defaultCustomers));
   const [coupons, setCoupons] = useState<Coupon[]>(() => stored('gg_coupons', []));
   const [banners, setBanners] = useState<Banner[]>(() => stored('gg_banners', []));
-  const [settings, setSettings] = useState<StoreSettings>(() => stored('gg_settings', defaultSettings));
+  const [settings, setSettings] = useState<StoreSettings>(() => {
+    const shouldConvertCurrency = shouldConvertStoredCurrency('gg_settings');
+    const saved = stored<StoreSettings>('gg_settings', defaultSettings);
+    return shouldConvertCurrency
+      ? {
+          ...saved,
+          deliveryFee: migrateUsdAmountToNgn(saved.deliveryFee),
+          freeDeliveryThreshold: migrateUsdAmountToNgn(saved.freeDeliveryThreshold),
+        }
+      : saved;
+  });
 
   useEffect(() => {
+    localStorage.setItem('gg_currency_version', NGN_CURRENCY_VERSION);
     localStorage.setItem('gg_products', JSON.stringify(products));
     localStorage.setItem('gg_categories', JSON.stringify(categories));
     localStorage.setItem('gg_cart', JSON.stringify(cart));

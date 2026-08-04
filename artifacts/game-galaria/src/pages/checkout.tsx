@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useState } from 'react';
 import { ShieldCheck, Truck, CreditCard, Banknote, ChevronLeft, CheckCircle2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { formatCurrency, NGN_DELIVERY_FEE, NGN_FREE_DELIVERY_THRESHOLD } from '@/lib/currency';
 
 export default function Checkout() {
   const { cart, getCartTotal, createOrder } = useShop();
@@ -18,7 +19,7 @@ export default function Checkout() {
   const [orderId, setOrderId] = useState('');
 
   const total = getCartTotal();
-  const shipping = total > 100 ? 0 : 15;
+  const shipping = total > NGN_FREE_DELIVERY_THRESHOLD ? 0 : NGN_DELIVERY_FEE;
   const tax = total * 0.08;
   const finalTotal = total + shipping + tax;
 
@@ -207,7 +208,7 @@ export default function Checkout() {
                         <div className="text-muted-foreground text-xs mt-1">{item.product.platform}</div>
                       </div>
                       <div className="font-mono font-medium text-sm">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                         {formatCurrency(item.product.price * item.quantity)}
                       </div>
                     </div>
                   ))}
@@ -218,15 +219,15 @@ export default function Checkout() {
                 <div className="space-y-3 mb-6 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-mono">${total.toFixed(2)}</span>
+                     <span className="font-mono">{formatCurrency(total)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Shipping</span>
-                    <span className="font-mono">{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                     <span className="font-mono">{shipping === 0 ? 'Free' : formatCurrency(shipping)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Taxes</span>
-                    <span className="font-mono">${tax.toFixed(2)}</span>
+                     <span className="font-mono">{formatCurrency(tax)}</span>
                   </div>
                 </div>
 
@@ -235,8 +236,8 @@ export default function Checkout() {
                 <div className="flex justify-between items-end mb-8">
                   <span className="font-bold text-lg">Total</span>
                   <div className="text-right">
-                    <div className="text-xs text-muted-foreground mb-1">USD</div>
-                    <span className="font-bold text-3xl font-mono text-primary">${finalTotal.toFixed(2)}</span>
+                     <div className="text-xs text-muted-foreground mb-1">NGN</div>
+                     <span className="font-bold text-3xl font-mono text-primary">{formatCurrency(finalTotal)}</span>
                   </div>
                 </div>
 

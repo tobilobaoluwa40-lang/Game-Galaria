@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { useClerk, useUser } from '@clerk/react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
+import { formatCurrency } from '@/lib/currency';
 
 export default function Account() {
   const { products, wishlist, orders } = useShop();
@@ -153,7 +154,7 @@ export default function Account() {
                             </div>
                             <div>
                               <div className="text-xs text-muted-foreground mb-1">Total</div>
-                              <div className="font-medium font-mono text-sm">${order.total.toFixed(2)}</div>
+                              <div className="font-medium font-mono text-sm">{formatCurrency(order.total)}</div>
                             </div>
                             <div>
                               <div className="text-xs text-muted-foreground mb-1">Order #</div>

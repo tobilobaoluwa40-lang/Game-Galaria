@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Filter, SlidersHorizontal, X } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useShop } from '@/context/shop-context';
+import { formatCurrency } from '@/lib/currency';
 
 export default function Shop() {
   const { products } = useShop();
@@ -22,7 +23,7 @@ export default function Shop() {
   
   const [search, setSearch] = useState(initialSearch);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory ? [initialCategory] : []);
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, 1_000_000]);
   const [sortBy, setSortBy] = useState('featured');
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
@@ -95,17 +96,17 @@ export default function Shop() {
 
       <div>
         <h3 className="font-semibold mb-4 text-lg">Price Range</h3>
-        <Slider
-          defaultValue={[0, 1000]}
-          max={1000}
-          step={10}
+         <Slider
+           defaultValue={[0, 1_000_000]}
+           max={1_000_000}
+           step={10_000}
           value={priceRange}
           onValueChange={setPriceRange}
           className="mb-6"
         />
         <div className="flex items-center justify-between text-sm text-muted-foreground font-mono">
-          <span>${priceRange[0]}</span>
-          <span>${priceRange[1]}</span>
+           <span>{formatCurrency(priceRange[0])}</span>
+           <span>{formatCurrency(priceRange[1])}</span>
         </div>
       </div>
     </div>

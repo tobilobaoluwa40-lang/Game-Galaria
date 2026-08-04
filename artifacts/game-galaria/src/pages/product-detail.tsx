@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { formatCurrency } from '@/lib/currency';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -120,9 +121,9 @@ export default function ProductDetail() {
               </div>
 
               <div className="flex items-end gap-3 mb-8">
-                <span className="text-4xl font-bold font-mono text-foreground">${product.price.toFixed(2)}</span>
+                <span className="text-4xl font-bold font-mono text-foreground">{formatCurrency(product.price)}</span>
                 {product.compareAtPrice && (
-                  <span className="text-xl text-muted-foreground line-through mb-1 font-mono">${product.compareAtPrice.toFixed(2)}</span>
+                  <span className="text-xl text-muted-foreground line-through mb-1 font-mono">{formatCurrency(product.compareAtPrice)}</span>
                 )}
               </div>
 

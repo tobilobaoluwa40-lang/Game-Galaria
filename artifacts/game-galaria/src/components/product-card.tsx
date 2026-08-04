@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/currency';
 
 export function ProductCard({ product }: { product: Product }) {
   const { addToCart, toggleWishlist, isInWishlist } = useShop();
@@ -93,11 +94,11 @@ export function ProductCard({ product }: { product: Product }) {
           <div>
             {product.compareAtPrice && (
               <span className="text-sm text-muted-foreground line-through block mb-0.5">
-                ${product.compareAtPrice.toFixed(2)}
+                {formatCurrency(product.compareAtPrice)}
               </span>
             )}
             <span className="text-xl font-bold font-mono text-primary">
-              ${product.price.toFixed(2)}
+              {formatCurrency(product.price)}
             </span>
           </div>
 

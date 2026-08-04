@@ -5,12 +5,13 @@ import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Trash2, Plus, Minus, ArrowRight, Heart, BookmarkPlus } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { formatCurrency, NGN_DELIVERY_FEE, NGN_FREE_DELIVERY_THRESHOLD } from '@/lib/currency';
 
 export default function Cart() {
   const { cart, savedForLater, updateQuantity, removeFromCart, getCartTotal, moveToSaved, moveToCart, removeSaved } = useShop();
 
   const total = getCartTotal();
-  const shipping = total > 100 ? 0 : 15;
+  const shipping = total > NGN_FREE_DELIVERY_THRESHOLD ? 0 : NGN_DELIVERY_FEE;
   const tax = total * 0.08;
   const finalTotal = total + shipping + tax;
 
@@ -57,9 +58,9 @@ export default function Cart() {
                               <span className="text-sm text-muted-foreground mt-1 block">{item.product.platform}</span>
                             </div>
                             <div className="text-right">
-                               <div className="font-bold font-mono text-lg text-primary">${(item.product.price * item.quantity).toFixed(2)}</div>
+                                <div className="font-bold font-mono text-lg text-primary">{formatCurrency(item.product.price * item.quantity)}</div>
                               {item.quantity > 1 && (
-                                <div className="text-xs text-muted-foreground">${item.product.price.toFixed(2)} each</div>
+                                 <div className="text-xs text-muted-foreground">{formatCurrency(item.product.price)} each</div>
                               )}
                             </div>
                           </div>
@@ -117,15 +118,15 @@ export default function Cart() {
                   <div className="space-y-4 mb-6 text-sm">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span className="font-mono font-medium">${total.toFixed(2)}</span>
+                      <span className="font-mono font-medium">{formatCurrency(total)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Estimated Shipping</span>
-                      <span className="font-mono font-medium">{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                      <span className="font-mono font-medium">{shipping === 0 ? 'Free' : formatCurrency(shipping)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Estimated Tax</span>
-                      <span className="font-mono font-medium">${tax.toFixed(2)}</span>
+                      <span className="font-mono font-medium">{formatCurrency(tax)}</span>
                     </div>
                   </div>
                   
@@ -133,7 +134,7 @@ export default function Cart() {
                   
                   <div className="flex justify-between items-end mb-8">
                     <span className="font-bold text-lg">Total</span>
-                    <span className="font-bold text-2xl font-mono text-primary">${finalTotal.toFixed(2)}</span>
+                    <span className="font-bold text-2xl font-mono text-primary">{formatCurrency(finalTotal)}</span>
                   </div>
 
                   <Link href="/checkout">
@@ -161,7 +162,7 @@ export default function Cart() {
                       <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
                     </div>
                     <h3 className="font-bold line-clamp-2 mb-2">{product.name}</h3>
-                    <div className="font-bold text-primary font-mono mb-4">${product.price.toFixed(2)}</div>
+                    <div className="font-bold text-primary font-mono mb-4">{formatCurrency(product.price)}</div>
                     <div className="mt-auto flex gap-2">
                       <Button className="flex-1" onClick={() => moveToCart(product.id)}>
                         Add to Cart
