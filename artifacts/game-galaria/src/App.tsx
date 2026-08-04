@@ -48,12 +48,17 @@ function SignInScreen({ path, signUpUrl }: { path: string; signUpUrl: string }) 
 function SignUpScreen({ path, signInUrl }: { path: string; signInUrl: string }) {
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-10">
-      <SignUp
-        routing="path"
-        path={path}
-        signInUrl={signInUrl}
-        fallbackRedirectUrl={`${basePath}/account`}
-      />
+      <div className="w-full max-w-[440px]">
+        <SignUp
+          routing="path"
+          path={path}
+          signInUrl={signInUrl}
+          fallbackRedirectUrl={`${basePath}/account`}
+        />
+        <p className="mx-auto -mt-5 max-w-[360px] px-4 text-center text-xs leading-5 text-[#959372]">
+          Use a unique password you have not used on another website. Avoid common or previously exposed passwords; Clerk blocks compromised passwords to help protect your account.
+        </p>
+      </div>
     </div>
   );
 }
@@ -317,6 +322,10 @@ function ClerkApp() {
       localization={{
         signIn: { start: { title: 'Welcome back', subtitle: 'Log in to access your Game Galaria account' } },
         signUp: { start: { title: 'Create your account', subtitle: 'Join Game Galaria and start leveling up your setup' } },
+        unstable__errors: {
+          form_password_pwned: 'This password has appeared in a data breach. Choose a new, unique password.',
+          form_password_not_strong_enough: 'Choose a stronger password with a mix of letters, numbers, and symbols.',
+        },
       }}
       routerPush={(to) => setLocation(stripBase(to))}
       routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
