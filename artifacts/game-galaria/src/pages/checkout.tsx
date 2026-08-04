@@ -26,12 +26,12 @@ export default function Checkout() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const values = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
     setIsSubmitting(true);
     
     // Simulate network delay
     setTimeout(() => {
-      const form = e.currentTarget as HTMLFormElement;
-      const values = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
       const order = createOrder(values);
       setOrderId(order.id);
       setIsSuccess(true);
@@ -101,11 +101,11 @@ export default function Checkout() {
                   <div className="grid gap-4">
                     <div className="grid gap-2">
                       <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" type="email" placeholder="gamer@example.com" required className="bg-background" />
+                      <Input id="email" name="email" type="email" placeholder="gamer@example.com" required className="bg-background" />
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" required className="bg-background" />
+                      <Input id="phone" name="phone" type="tel" placeholder="+234 800 000 0000" required className="bg-background" />
                     </div>
                   </div>
                 </div>
@@ -120,25 +120,25 @@ export default function Checkout() {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="fname">First Name</Label>
-                        <Input id="fname" required className="bg-background" />
+                        <Input id="fname" name="fname" required className="bg-background" />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="lname">Last Name</Label>
-                        <Input id="lname" required className="bg-background" />
+                        <Input id="lname" name="lname" required className="bg-background" />
                       </div>
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="address">Street Address</Label>
-                      <Input id="address" required className="bg-background" />
+                      <Input id="address" name="address" required className="bg-background" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
                         <Label htmlFor="city">City</Label>
-                        <Input id="city" required className="bg-background" />
+                        <Input id="city" name="city" required className="bg-background" />
                       </div>
                       <div className="grid gap-2">
                         <Label htmlFor="postal">Postal Code</Label>
-                        <Input id="postal" required className="bg-background" />
+                        <Input id="postal" name="postal" required className="bg-background" />
                       </div>
                     </div>
                   </div>
@@ -151,7 +151,7 @@ export default function Checkout() {
                     Payment Method
                   </h2>
                   
-                  <RadioGroup defaultValue="card" className="grid gap-4">
+                  <RadioGroup name="paymentMethod" defaultValue="card" className="grid gap-4">
                     <div className="flex items-center space-x-2 border border-border p-4 rounded-lg bg-background has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-colors">
                       <RadioGroupItem value="card" id="card" />
                       <Label htmlFor="card" className="flex-1 flex justify-between items-center cursor-pointer">
@@ -162,10 +162,10 @@ export default function Checkout() {
                     
                     {/* Fake Card inputs that show when selected */}
                     <div className="pl-8 pr-4 grid gap-4 mb-2">
-                      <Input placeholder="Card Number" className="font-mono bg-background" />
+                      <Input name="cardNumber" placeholder="Card Number" className="font-mono bg-background" />
                       <div className="grid grid-cols-2 gap-4">
-                        <Input placeholder="MM/YY" className="font-mono bg-background" />
-                        <Input placeholder="CVC" className="font-mono bg-background" />
+                        <Input name="cardExpiry" placeholder="MM/YY" className="font-mono bg-background" />
+                        <Input name="cardCvc" placeholder="CVC" className="font-mono bg-background" />
                       </div>
                     </div>
 
