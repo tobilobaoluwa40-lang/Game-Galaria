@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
-import { ClerkProvider, Show, SignIn, SignUp, useClerk } from '@clerk/react';
+import { useEffect, useRef, useState } from 'react';
+import { ClerkProvider, Show, SignIn, SignUp, useClerk, useSignIn } from '@clerk/react';
 import { publishableKeyFromHost } from '@clerk/react/internal';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { Redirect, Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
+import { Link, Redirect, Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import { ShopProvider } from '@/context/shop-context';
 import Home from '@/pages/home';
 import Shop from '@/pages/shop';
@@ -14,6 +14,9 @@ import Cart from '@/pages/cart';
 import Checkout from '@/pages/checkout';
 import Account from '@/pages/account';
 import Admin from '@/pages/admin';
+import { ArrowRight, Eye, EyeOff, Loader2, LockKeyhole, Mail } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const queryClient = new QueryClient();
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -55,12 +58,156 @@ function SignUpScreen({ path, signInUrl }: { path: string; signInUrl: string }) 
   );
 }
 
+function PasswordLoginScreen() {
+  const { signIn, fetchStatus } = useSignIn();
+  const { setActive } = useClerk();
+  const [, setLocation] = useLocation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorMessage('');
+
+    const normalizedEmail = email.trim();
+    if (!normalizedEmail || !/^\S+@\S+\.\S+$/.test(normalizedEmail)) {
+      setErrorMessage('Enter a valid email address.');
+      return;
+    }
+    if (!password) {
+      setErrorMessage('Enter your password.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const result = await signIn.create({
+        identifier: normalizedEmail,
+        password,
+      });
+
+      if (result.error) {
+        setErrorMessage(result.error.longMessage || result.error.message);
+        return;
+      }
+
+      if (signIn.status === 'complete' && signIn.createdSessionId) {
+        await setActive({ session: signIn.createdSessionId });
+        setLocation('/account');
+        return;
+      }
+
+      setErrorMessage(
+        signIn.status === 'needs_second_factor'
+          ? 'Additional verification is required to finish signing in. Please use the secure sign-in flow.'
+          : 'We could not complete sign-in. Please check your details and try again.',
+      );
+    } catch (error: unknown) {
+      const clerkError = error as {
+        errors?: Array<{ longMessage?: string; message?: string }>;
+      };
+      setErrorMessage(
+        clerkError.errors?.[0]?.longMessage ||
+        clerkError.errors?.[0]?.message ||
+        'We could not sign you in. Check your email and password and try again.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-10">
+      <div className="w-full max-w-[440px] overflow-hidden rounded-2xl border border-[#243041] bg-[#0d1117] shadow-2xl">
+        <div className="px-6 pb-7 pt-8 sm:px-10">
+          <Link href="/" className="mx-auto mb-6 flex w-fit items-center gap-2">
+            <img src={`${basePath}/logo.svg`} alt="Game Galaria" className="h-8 w-auto" />
+          </Link>
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-slate-50">Welcome back</h1>
+            <p className="mt-2 text-sm text-slate-400">Log in to access your Game Galaria account</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
+            <div className="space-y-2">
+              <label htmlFor="login-email" className="text-sm font-medium text-slate-200">Email address</label>
+              <div className="relative">
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <Input
+                  id="login-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="Enter your email address"
+                  className="h-11 border-[#243041] bg-[#111827] pl-10 text-slate-50 placeholder:text-slate-500"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-3">
+                <label htmlFor="login-password" className="text-sm font-medium text-slate-200">Password</label>
+                <Link href="/sign-in" className="text-xs font-medium text-primary hover:underline">Forgot password?</Link>
+              </div>
+              <div className="relative">
+                <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <Input
+                  id="login-password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Enter your password"
+                  className="h-11 border-[#243041] bg-[#111827] pl-10 pr-11 text-slate-50 placeholder:text-slate-500"
+                />
+                <button
+                  type="button"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-200"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            {errorMessage && (
+              <p role="alert" className="rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 py-2 text-sm text-rose-200">
+                {errorMessage}
+              </p>
+            )}
+
+            <Button type="submit" disabled={isSubmitting || fetchStatus === 'fetching'} className="h-11 w-full gap-2 font-semibold">
+              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Log in <ArrowRight className="h-4 w-4" /></>}
+            </Button>
+          </form>
+
+          <p className="mt-6 text-center text-sm text-slate-400">
+            Don&apos;t have an account?{' '}
+            <Link href="/register" className="font-semibold text-primary hover:underline">Create account</Link>
+          </p>
+        </div>
+        <div className="border-t border-[#243041] px-6 py-4 text-center text-xs text-slate-500">
+          Your password is sent securely to Clerk and never stored by Game Galaria.
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SignInPage() {
   return <SignInScreen path={`${basePath}/sign-in`} signUpUrl={`${basePath}/register`} />;
 }
 
 function LoginPage() {
-  return <SignInScreen path={`${basePath}/login`} signUpUrl={`${basePath}/register`} />;
+  return <PasswordLoginScreen />;
 }
 
 function SignUpPage() {
