@@ -3,3 +3,4 @@
 - [Currency localization](currency-localization.md) — storefront amounts use NGN with one shared formatter and a one-time migration for older saved USD data.
 - [Product image assets](product-image-assets.md) — catalog products use local generated assets with an ID-based migration for previously saved placeholder records.
 - [Catalog expansion](catalog-expansion.md) — category additions use stable generated product records merged into saved browser catalogs without replacing custom admin products.
+- [Store branding](store-branding.md) — admin-managed logo settings persist with store configuration and render through shared branding with a safe fallback.

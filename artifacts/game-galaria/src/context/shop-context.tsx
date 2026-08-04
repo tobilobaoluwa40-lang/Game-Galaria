@@ -64,6 +64,7 @@ export interface Banner {
 
 export interface StoreSettings {
   logo: string;
+  logoImage?: string;
   contactEmail: string;
   contactPhone: string;
   address: string;
@@ -82,6 +83,7 @@ const defaultCustomers: Customer[] = [
 ];
 const defaultSettings: StoreSettings = {
   logo: 'GAMEGALARIA',
+  logoImage: '',
   contactEmail: 'support@gamegalaria.com',
   contactPhone: '+1 (800) 555-GAME',
   address: '100 Pixel Avenue, Austin, TX',

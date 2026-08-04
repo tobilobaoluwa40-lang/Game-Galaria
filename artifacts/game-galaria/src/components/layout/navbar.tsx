@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'wouter';
-import { ShoppingCart, Heart, User, Search, Menu, X, Gamepad2, Moon, Sun, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Heart, User, Search, Menu, X, Moon, Sun, ChevronDown } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
 import { useShop } from '@/context/shop-context';
 import { useTheme } from '@/context/theme-context';
@@ -7,6 +7,7 @@ import { CATALOG_CATEGORIES } from '@/lib/catalog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@clerk/react';
+import { StoreLogo } from '@/components/store-logo';
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -49,12 +50,7 @@ export function Navbar() {
       <div className="container mx-auto flex min-h-16 items-center justify-between gap-3 px-4">
         <div className="flex min-w-0 items-center gap-4 lg:gap-6">
           <Link href="/" className="flex shrink-0 items-center gap-2 group" aria-label="Game Galaria home">
-            <div className="rounded-lg bg-primary/10 p-2 transition-colors group-hover:bg-primary/20">
-              <Gamepad2 className="h-6 w-6 text-primary" />
-            </div>
-            <span className="hidden text-xl font-bold tracking-tight sm:block">
-              GAME<span className="text-primary">GALARIA</span>
-            </span>
+            <StoreLogo className="max-h-9 max-w-48 object-contain" />
           </Link>
 
           <div className="hidden items-center gap-1 xl:flex">

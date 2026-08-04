@@ -1,6 +1,7 @@
 import { Link } from 'wouter';
-import { Gamepad2, Twitter, Instagram, Youtube, Twitch } from 'lucide-react';
+import { Twitter, Instagram, Youtube, Twitch } from 'lucide-react';
 import { CATALOG_CATEGORIES } from '@/lib/catalog';
+import { StoreLogo } from '@/components/store-logo';
 
 export function Footer() {
   return (
@@ -10,12 +11,7 @@ export function Footer() {
           
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="bg-primary/10 p-2 rounded-lg">
-                <Gamepad2 className="w-6 h-6 text-primary" />
-              </div>
-              <span className="font-bold text-xl tracking-tight">
-                GAME<span className="text-primary">GALARIA</span>
-              </span>
+              <StoreLogo className="max-h-10 max-w-56 object-contain" />
             </Link>
             <p className="text-sm text-muted-foreground">
               Your ultimate destination for the latest games, top-tier consoles, and elite gaming gear. Upgrade your setup today.

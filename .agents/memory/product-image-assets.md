@@ -7,4 +7,4 @@ Seed catalog products use local public image assets mapped by stable product ID.
 
 **Why:** The storefront persists products and nested product snapshots in browser storage; replacing only the seed URLs would leave existing carts, orders, and wishlists showing old placeholder artwork.
 
-**How to apply:** When replacing catalog photography, preserve stable product IDs and update the ID-to-asset map. Admin uploads must be persisted as data URLs or durable hosted paths, never `blob:` URLs; migrate invalid saved image values to a category fallback while leaving valid custom images intact.
+**How to apply:** When replacing catalog photography or brand imagery, preserve stable IDs and persist admin uploads as data URLs or durable hosted paths, never `blob:` URLs. Migrate invalid saved image values to a fallback while leaving valid custom images intact.

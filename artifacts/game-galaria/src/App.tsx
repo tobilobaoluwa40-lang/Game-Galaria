@@ -18,6 +18,7 @@ import Admin from '@/pages/admin';
 import { ArrowRight, Eye, EyeOff, Loader2, LockKeyhole, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { StoreLogo } from '@/components/store-logo';
 
 const queryClient = new QueryClient();
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -134,7 +135,7 @@ function PasswordLoginScreen() {
       <div className="w-full max-w-[440px] overflow-hidden rounded-[10px] border border-border bg-card shadow-2xl">
         <div className="px-6 pb-7 pt-8 sm:px-10">
           <Link href="/" className="mx-auto mb-6 flex w-fit items-center gap-2">
-            <img src={`${basePath}/logo.svg`} alt="Game Galaria" className="h-8 w-auto" />
+            <StoreLogo className="h-8 max-w-56 object-contain" />
           </Link>
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
