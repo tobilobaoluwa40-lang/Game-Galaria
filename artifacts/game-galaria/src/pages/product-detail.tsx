@@ -1,6 +1,5 @@
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { MOCK_PRODUCTS } from '@/lib/data';
 import { useShop } from '@/context/shop-context';
 import { useParams, Link } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -13,8 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const product = MOCK_PRODUCTS.find(p => p.id === id);
-  const { addToCart, toggleWishlist, isInWishlist } = useShop();
+  const { products, addToCart, toggleWishlist, isInWishlist } = useShop();
+  const product = products.find(p => p.id === id);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const { toast } = useToast();

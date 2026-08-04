@@ -1,1 +1,2 @@
 - [Git history recovery](git-history-recovery.md) — local app history and GitHub origin can start unrelated; merge the remote history before Git pane operations.
+- [Admin authentication](admin-authentication.md) — Clerk manages admin sign-in/sign-up; keep the public storefront open and protect `/admin` at the route boundary.

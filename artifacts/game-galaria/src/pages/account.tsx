@@ -4,17 +4,16 @@ import { useShop } from '@/context/shop-context';
 import { useLocation } from 'wouter';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { User, Package, Heart, MapPin, Settings, LogOut } from 'lucide-react';
-import { MOCK_PRODUCTS } from '@/lib/data';
 import { ProductCard } from '@/components/product-card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 
 export default function Account() {
-  const { wishlist, orders } = useShop();
+  const { products, wishlist, orders } = useShop();
   const searchParams = new URLSearchParams(window.location.search);
   const defaultTab = searchParams.get('tab') || 'profile';
 
-  const wishlistProducts = MOCK_PRODUCTS.filter(p => wishlist.includes(p.id));
+  const wishlistProducts = products.filter(p => wishlist.includes(p.id));
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

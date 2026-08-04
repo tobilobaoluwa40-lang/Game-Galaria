@@ -2,13 +2,14 @@ import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { MOCK_PRODUCTS } from '@/lib/data';
 import { ProductCard } from '@/components/product-card';
+import { useShop } from '@/context/shop-context';
 import { Gamepad2, Cpu, Headphones, Keyboard, MonitorPlay, ChevronRight, Zap, Badge } from 'lucide-react';
 
 export default function Home() {
-  const newArrivals = MOCK_PRODUCTS.filter(p => p.badge === 'New Arrival' || p.badge === 'Top Selling').slice(0, 4);
-  const featured = MOCK_PRODUCTS.filter(p => p.badge === 'Featured' || p.badge === 'Deal').slice(0, 4);
+  const { products } = useShop();
+  const newArrivals = products.filter(p => p.badge === 'New Arrival' || p.badge === 'Top Selling').slice(0, 4);
+  const featured = products.filter(p => p.badge === 'Featured' || p.badge === 'Deal' || p.badge === 'Limited-Time Deal').slice(0, 4);
 
   return (
     <div className="min-h-screen flex flex-col">

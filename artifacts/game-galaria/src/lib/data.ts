@@ -1,5 +1,5 @@
-export type Category = 'Consoles' | 'Games' | 'Controllers' | 'Headsets' | 'Keyboards' | 'Chairs' | 'Accessories' | 'Gift Cards';
-export type Platform = 'PS5' | 'PS4' | 'Xbox Series X|S' | 'Nintendo Switch' | 'PC' | 'Multiplatform';
+export type Category = string;
+export type Platform = string;
 
 export interface Product {
   id: string;
@@ -12,7 +12,8 @@ export interface Product {
   rating: number;
   reviewCount: number;
   image: string;
-  badge?: 'New Arrival' | 'Top Selling' | 'Popular' | 'Deal' | 'Featured';
+  badge?: string;
+  images?: string[];
   stock: number;
   description: string;
   specs: Record<string, string>;

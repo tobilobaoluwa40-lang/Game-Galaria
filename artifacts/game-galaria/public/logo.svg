@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="Game Galaria">
+  <rect width="80" height="80" rx="18" fill="#00ff99"/>
+  <path d="M22 39h8l5-9h10l5 9h8v15H22V39Zm7 3v8h23v-8h-5l-3-6h-7l-3 6h-5Z" fill="#07110d"/>
+  <circle cx="35" cy="46" r="2.5" fill="#00ff99"/>
+  <circle cx="53" cy="44" r="2.5" fill="#00ff99"/>
+  <text x="96" y="52" fill="#f8fafc" font-family="Arial, sans-serif" font-size="30" font-weight="800">GAME</text>
+  <text x="194" y="52" fill="#00ff99" font-family="Arial, sans-serif" font-size="30" font-weight="800">GALARIA</text>
+</svg>

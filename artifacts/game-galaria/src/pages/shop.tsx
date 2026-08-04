@@ -1,6 +1,6 @@
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
-import { MOCK_PRODUCTS, Category } from '@/lib/data';
+import { Category } from '@/lib/data';
 import { ProductCard } from '@/components/product-card';
 import { useLocation } from 'wouter';
 import { useState, useMemo } from 'react';
@@ -10,8 +10,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Filter, SlidersHorizontal, X } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useShop } from '@/context/shop-context';
 
 export default function Shop() {
+  const { products } = useShop();
   const [location] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
   
@@ -33,7 +35,7 @@ export default function Shop() {
   };
 
   const filteredProducts = useMemo(() => {
-    let result = MOCK_PRODUCTS;
+    let result = [...products];
 
     if (search) {
       const q = search.toLowerCase();
@@ -69,7 +71,7 @@ export default function Shop() {
     }
 
     return result;
-  }, [search, selectedCategories, priceRange, sortBy]);
+  }, [products, search, selectedCategories, priceRange, sortBy]);
 
   const FilterSidebar = () => (
     <div className="space-y-8">

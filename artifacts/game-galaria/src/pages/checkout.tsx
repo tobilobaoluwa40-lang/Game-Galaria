@@ -28,9 +28,9 @@ export default function Checkout() {
     
     // Simulate network delay
     setTimeout(() => {
-      const order = createOrder({
-        // form data would go here
-      });
+      const form = e.currentTarget as HTMLFormElement;
+      const values = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      const order = createOrder(values);
       setOrderId(order.id);
       setIsSuccess(true);
       setIsSubmitting(false);
