@@ -298,12 +298,15 @@ function PromoCarousel() {
                 <p className="mt-4 max-w-[520px] text-sm leading-6 text-[#AAB18E]/85 sm:text-base">
                   {item.description}
                 </p>
-                <Link href={item.href} className="mt-7 inline-flex">
-                  <Button className="h-11 bg-[#AAB18E] px-6 font-bold text-[#1B2926] shadow-[0_8px_22px_rgba(170,177,142,.16)] hover:bg-[#C2C7AC]">
+                <Button
+                  asChild
+                  className="mt-7 h-11 bg-[#AAB18E] px-6 font-bold text-[#1B2926] shadow-[0_8px_22px_rgba(170,177,142,.16)] hover:bg-[#C2C7AC]"
+                >
+                  <Link href={item.href}>
                     {item.action}
                     <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
 
               <div className="absolute right-6 top-1/2 hidden h-[210px] w-[34%] -translate-y-1/2 rotate-[2deg] overflow-hidden rounded-[10px] border border-[#61705B]/60 bg-[#263A31]/60 shadow-[0_12px_30px_rgba(6,16,13,.18)] sm:block lg:right-12 lg:h-[225px]">
