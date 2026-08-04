@@ -94,6 +94,31 @@ function stored<T>(key: string, fallback: T): T {
   }
 }
 
+const LEGACY_PLACEHOLDER_PREFIX = 'https://placehold.co/600x600/121212/00ffcc';
+const CURRENT_PLACEHOLDER_PREFIX = 'https://placehold.co/600x600/1A2525/C2C7AC';
+
+function migrateProductImage(image: string) {
+  return image.startsWith(LEGACY_PLACEHOLDER_PREFIX)
+    ? image.replace(LEGACY_PLACEHOLDER_PREFIX, CURRENT_PLACEHOLDER_PREFIX)
+    : image;
+}
+
+function migrateProduct(product: Product): Product {
+  return {
+    ...product,
+    image: migrateProductImage(product.image),
+    images: product.images?.map(migrateProductImage),
+  };
+}
+
+function migrateCartItems(items: CartItem[]): CartItem[] {
+  return items.map((item) => ({ ...item, product: migrateProduct(item.product) }));
+}
+
+function migrateOrders(items: Order[]): Order[] {
+  return items.map((order) => ({ ...order, items: migrateCartItems(order.items) }));
+}
+
 interface ShopContextType {
   products: Product[];
   categories: string[];
@@ -133,12 +158,12 @@ interface ShopContextType {
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
 export function ShopProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<Product[]>(() => stored('gg_products', MOCK_PRODUCTS));
+  const [products, setProducts] = useState<Product[]>(() => stored<Product[]>('gg_products', MOCK_PRODUCTS).map(migrateProduct));
   const [categories, setCategories] = useState<string[]>(() => stored('gg_categories', defaultCategories));
-  const [cart, setCart] = useState<CartItem[]>(() => stored('gg_cart', []));
-  const [savedForLater, setSavedForLater] = useState<Product[]>(() => stored('gg_saved', []));
+  const [cart, setCart] = useState<CartItem[]>(() => migrateCartItems(stored('gg_cart', [])));
+  const [savedForLater, setSavedForLater] = useState<Product[]>(() => stored<Product[]>('gg_saved', []).map(migrateProduct));
   const [wishlist, setWishlist] = useState<string[]>(() => stored('gg_wishlist', []));
-  const [orders, setOrders] = useState<Order[]>(() => stored('gg_orders', []));
+  const [orders, setOrders] = useState<Order[]>(() => migrateOrders(stored('gg_orders', [])));
   const [customers, setCustomers] = useState<Customer[]>(() => stored('gg_customers', defaultCustomers));
   const [coupons, setCoupons] = useState<Coupon[]>(() => stored('gg_coupons', []));
   const [banners, setBanners] = useState<Banner[]>(() => stored('gg_banners', []));

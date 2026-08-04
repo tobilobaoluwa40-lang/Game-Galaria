@@ -85,7 +85,7 @@ export default function ProductDetail() {
               </div>
               <div className="grid grid-cols-4 gap-4">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className={`aspect-square rounded-xl border flex items-center justify-center p-4 cursor-pointer bg-card ${i === 1 ? 'border-primary shadow-[0_0_10px_rgba(0,255,204,0.2)]' : 'border-border hover:border-primary/50'}`}>
+                  <div key={i} className={`aspect-square rounded-[10px] border flex items-center justify-center p-4 cursor-pointer bg-card ${i === 1 ? 'border-primary shadow-[0_8px_20px_hsl(180_17.5%_12.4%_/_0.3)]' : 'border-border hover:border-primary/50'}`}>
                     <img src={product.image} alt="" className="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
                   </div>
                 ))}
@@ -155,7 +155,7 @@ export default function ProductDetail() {
 
                 <Button 
                   size="lg" 
-                  className={`flex-1 h-14 text-lg font-bold shadow-[0_0_20px_rgba(0,255,204,0.15)] hover:shadow-[0_0_30px_rgba(0,255,204,0.25)] transition-all ${isAdding ? 'bg-primary text-primary-foreground' : ''}`}
+                  className={`flex-1 h-14 text-lg font-bold shadow-[0_12px_28px_hsl(180_17.5%_12.4%_/_0.3)] ${isAdding ? 'bg-primary text-primary-foreground' : ''}`}
                   onClick={handleAddToCart}
                   disabled={product.stock === 0}
                 >

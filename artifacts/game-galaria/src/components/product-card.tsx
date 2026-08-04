@@ -31,7 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <div className="group relative bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,204,0.1)] flex flex-col h-full">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-[10px] border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_16px_32px_hsl(180_17.5%_12.4%_/_0.35)]">
       
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">

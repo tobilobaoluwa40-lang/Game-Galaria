@@ -47,7 +47,7 @@ export default function Checkout() {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1 flex items-center justify-center py-12 px-4">
-          <div className="max-w-md w-full bg-card border border-primary/30 rounded-2xl p-8 text-center shadow-[0_0_40px_rgba(0,255,204,0.1)] neon-box">
+          <div className="max-w-md w-full bg-card border border-primary/30 rounded-[10px] p-8 text-center neon-box">
             <CheckCircle2 className="w-20 h-20 text-primary mx-auto mb-6" />
             <h1 className="text-3xl font-bold mb-2">Order Confirmed!</h1>
             <p className="text-muted-foreground mb-6">Your gear is getting ready to ship.</p>

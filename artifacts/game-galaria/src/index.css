@@ -70,53 +70,51 @@
   --elevate-1: rgba(255, 255, 255, 0.04);
   --elevate-2: rgba(255, 255, 255, 0.09);
 
-  /* Deep dark gaming background */
-  --background: 240 10% 4%;
-  --foreground: 0 0% 98%;
+  /* Game Galaria olive / forest palette */
+  --background: 180 17.5% 12.4%; /* #1A2525 */
+  --foreground: 71 19.4% 72.7%; /* #C2C7AC */
 
-  --border: 240 10% 12%;
-  --input: 240 10% 12%;
-  --ring: 150 100% 50%;
+  --border: 158 9.9% 21.8%; /* #323D39 */
+  --input: 158 9.9% 21.8%;
+  --ring: 77 12.4% 48.8%; /* #838C6D */
 
-  --card: 240 10% 6%;
-  --card-foreground: 0 0% 98%;
-  --card-border: 240 10% 12%;
+  --card: 160 16.7% 14.1%; /* #1E2A26 */
+  --card-foreground: 71 19.4% 72.7%;
+  --card-border: 158 9.9% 21.8%;
 
-  --popover: 240 10% 6%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 240 10% 12%;
+  --popover: 160 16.7% 14.1%;
+  --popover-foreground: 71 19.4% 72.7%;
+  --popover-border: 158 9.9% 21.8%;
 
-  /* Electric Neon Green */
-  --primary: 150 100% 50%;
-  --primary-foreground: 240 10% 4%;
+  --primary: 77 12.4% 48.8%; /* #838C6D */
+  --primary-foreground: 180 17.5% 12.4%;
 
-  /* Deep Purple secondary */
-  --secondary: 280 100% 60%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 77 16.2% 37.5%; /* #666F50 */
+  --secondary-foreground: 71 19.4% 72.7%;
 
-  --muted: 240 10% 12%;
-  --muted-foreground: 240 5% 65%;
+  --muted: 158 9.9% 21.8%;
+  --muted-foreground: 56.6 14.2% 51.6%; /* #959372 */
 
-  --accent: 150 100% 50%;
-  --accent-foreground: 240 10% 4%;
+  --accent: 56.6 14.2% 51.6%; /* #959372 */
+  --accent-foreground: 180 17.5% 12.4%;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive: 56.6 14.2% 51.6%;
+  --destructive-foreground: 180 17.5% 12.4%;
 
-  --sidebar: 240 10% 6%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-border: 240 10% 12%;
-  --sidebar-primary: 150 100% 50%;
-  --sidebar-primary-foreground: 240 10% 4%;
-  --sidebar-accent: 240 10% 12%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 150 100% 50%;
+  --sidebar: 160 16.7% 14.1%;
+  --sidebar-foreground: 71 19.4% 72.7%;
+  --sidebar-border: 158 9.9% 21.8%;
+  --sidebar-primary: 77 12.4% 48.8%;
+  --sidebar-primary-foreground: 180 17.5% 12.4%;
+  --sidebar-accent: 158 9.9% 21.8%;
+  --sidebar-accent-foreground: 71 19.4% 72.7%;
+  --sidebar-ring: 77 12.4% 48.8%;
 
   --app-font-sans: 'Outfit', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: 'Space Mono', monospace;
   
-  --radius: 0.25rem;
+  --radius: 10px;
 
   --sidebar-primary-border: hsl(var(--sidebar-primary));
   --sidebar-accent-border: hsl(var(--sidebar-accent));
@@ -135,8 +133,21 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 15% 0%, hsl(77 16.2% 37.5% / 0.12), transparent 34rem),
+      radial-gradient(circle at 90% 15%, hsl(56.6 14.2% 51.6% / 0.07), transparent 28rem);
+  }
+  button,
+  [role='button'],
+  input,
+  textarea,
+  select {
+    border-radius: 10px;
   }
   
   /* Custom scrollbar for gaming feel */
@@ -148,7 +159,7 @@
     @apply bg-background;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted rounded-full;
+    @apply bg-muted;
   }
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-primary;
@@ -156,14 +167,48 @@
 }
 
 .neon-text {
-  text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  text-shadow: 0 0 16px hsl(var(--primary) / 0.35);
 }
 .neon-box {
-  box-shadow: 0 0 20px hsl(var(--primary) / 0.15), inset 0 0 10px hsl(var(--primary) / 0.1);
+  box-shadow: 0 18px 60px hsl(180 17.5% 12.4% / 0.4), inset 0 0 24px hsl(var(--primary) / 0.08);
   border: 1px solid hsl(var(--primary) / 0.3);
 }
 
 @layer utilities {
+  /* Keep legacy page-level rounded utilities aligned with the 10px system. */
+  [class~='rounded'],
+  [class~='rounded-sm'],
+  [class~='rounded-md'],
+  [class~='rounded-lg'],
+  [class~='rounded-xl'],
+  [class~='rounded-2xl'],
+  [class~='rounded-3xl'] {
+    border-radius: 10px;
+  }
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 700ms ease, transform 700ms ease;
+    will-change: opacity, transform;
+  }
+  .reveal-on-scroll[data-revealed='true'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cta-button {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease;
+  }
+  .cta-button:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 26px hsl(180 17.5% 12.4% / 0.35);
+  }
+  .cta-button:active:not(:disabled) {
+    transform: translateY(0) scale(0.99);
+  }
   input[type='search']::-webkit-search-cancel-button {
     @apply hidden;
   }
@@ -171,5 +216,23 @@
     content: attr(data-placeholder);
     color: hsl(var(--muted-foreground));
     pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
   }
 }

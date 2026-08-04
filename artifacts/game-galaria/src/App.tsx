@@ -120,21 +120,21 @@ function PasswordLoginScreen() {
 
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-10">
-      <div className="w-full max-w-[440px] overflow-hidden rounded-2xl border border-[#243041] bg-[#0d1117] shadow-2xl">
+      <div className="w-full max-w-[440px] overflow-hidden rounded-[10px] border border-[#323D39] bg-[#1A2525] shadow-2xl">
         <div className="px-6 pb-7 pt-8 sm:px-10">
           <Link href="/" className="mx-auto mb-6 flex w-fit items-center gap-2">
             <img src={`${basePath}/logo.svg`} alt="Game Galaria" className="h-8 w-auto" />
           </Link>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-slate-50">Welcome back</h1>
-            <p className="mt-2 text-sm text-slate-400">Log in to access your Game Galaria account</p>
+            <h1 className="text-2xl font-bold text-[#C2C7AC]">Welcome back</h1>
+            <p className="mt-2 text-sm text-[#959372]">Log in to access your Game Galaria account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
             <div className="space-y-2">
-              <label htmlFor="login-email" className="text-sm font-medium text-slate-200">Email address</label>
+              <label htmlFor="login-email" className="text-sm font-medium text-[#C2C7AC]">Email address</label>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#666F50]" />
                 <Input
                   id="login-email"
                   name="email"
@@ -144,18 +144,18 @@ function PasswordLoginScreen() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="Enter your email address"
-                  className="h-11 border-[#243041] bg-[#111827] pl-10 text-slate-50 placeholder:text-slate-500"
+                  className="h-11 border-[#323D39] bg-[#1E2A26] pl-10 text-[#C2C7AC] placeholder:text-[#959372]"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-3">
-                <label htmlFor="login-password" className="text-sm font-medium text-slate-200">Password</label>
+                <label htmlFor="login-password" className="text-sm font-medium text-[#C2C7AC]">Password</label>
                 <Link href="/sign-in" className="text-xs font-medium text-primary hover:underline">Forgot password?</Link>
               </div>
               <div className="relative">
-                <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#666F50]" />
                 <Input
                   id="login-password"
                   name="password"
@@ -165,13 +165,13 @@ function PasswordLoginScreen() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Enter your password"
-                  className="h-11 border-[#243041] bg-[#111827] pl-10 pr-11 text-slate-50 placeholder:text-slate-500"
+                  className="h-11 border-[#323D39] bg-[#1E2A26] pl-10 pr-11 text-[#C2C7AC] placeholder:text-[#959372]"
                 />
                 <button
                   type="button"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                   onClick={() => setShowPassword((visible) => !visible)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-200"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#666F50] hover:text-[#C2C7AC]"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -179,7 +179,7 @@ function PasswordLoginScreen() {
             </div>
 
             {errorMessage && (
-              <p role="alert" className="rounded-lg border border-rose-400/30 bg-rose-400/10 px-3 py-2 text-sm text-rose-200">
+              <p role="alert" className="rounded-lg border border-[#959372]/50 bg-[#959372]/10 px-3 py-2 text-sm text-[#C2C7AC]">
                 {errorMessage}
               </p>
             )}
@@ -189,12 +189,12 @@ function PasswordLoginScreen() {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-slate-400">
+          <p className="mt-6 text-center text-sm text-[#959372]">
             Don&apos;t have an account?{' '}
             <Link href="/register" className="font-semibold text-primary hover:underline">Create account</Link>
           </p>
         </div>
-        <div className="border-t border-[#243041] px-6 py-4 text-center text-xs text-slate-500">
+        <div className="border-t border-[#323D39] px-6 py-4 text-center text-xs text-[#959372]">
           Your password is sent securely to Clerk and never stored by Game Galaria.
         </div>
       </div>
@@ -286,32 +286,32 @@ function ClerkApp() {
           logoImageUrl: `${window.location.origin}${basePath}/logo.svg`,
         },
         variables: {
-          colorPrimary: '#00ff99',
-          colorForeground: '#f8fafc',
-          colorMutedForeground: '#94a3b8',
-          colorDanger: '#fb7185',
-          colorBackground: '#0d1117',
-          colorInput: '#111827',
-          colorInputForeground: '#f8fafc',
-          colorNeutral: '#243041',
+          colorPrimary: '#838C6D',
+          colorForeground: '#C2C7AC',
+          colorMutedForeground: '#959372',
+          colorDanger: '#959372',
+          colorBackground: '#1A2525',
+          colorInput: '#1E2A26',
+          colorInputForeground: '#C2C7AC',
+          colorNeutral: '#323D39',
           fontFamily: 'Outfit, sans-serif',
-          borderRadius: '0.65rem',
+          borderRadius: '10px',
         },
         elements: {
           rootBox: 'w-full flex justify-center',
-          cardBox: 'bg-[#0d1117] border border-[#243041] rounded-2xl w-[440px] max-w-full overflow-hidden',
+          cardBox: 'bg-[#1A2525] border border-[#323D39] rounded-[10px] w-[440px] max-w-full overflow-hidden',
           card: '!shadow-none !border-0 !bg-transparent',
           footer: '!shadow-none !border-0 !bg-transparent',
-          headerTitle: 'text-slate-50',
-          headerSubtitle: 'text-slate-400',
-          formFieldLabel: 'text-slate-200',
-          formFieldInput: 'bg-[#111827] border-[#243041] text-slate-50',
-          formButtonPrimary: 'bg-[#00ff99] text-[#07110d] hover:bg-[#33ffaa]',
-          footerActionLink: 'text-[#00ff99]',
-          footerActionText: 'text-slate-400',
-          dividerText: 'text-slate-500',
-          socialButtonsBlockButtonText: 'text-slate-100',
-          alertText: 'text-rose-300',
+          headerTitle: 'text-[#C2C7AC]',
+          headerSubtitle: 'text-[#959372]',
+          formFieldLabel: 'text-[#C2C7AC]',
+          formFieldInput: 'bg-[#1E2A26] border-[#323D39] text-[#C2C7AC]',
+          formButtonPrimary: 'bg-[#838C6D] text-[#1A2525] hover:bg-[#959372]',
+          footerActionLink: 'text-[#838C6D]',
+          footerActionText: 'text-[#959372]',
+          dividerText: 'text-[#959372]',
+          socialButtonsBlockButtonText: 'text-[#C2C7AC]',
+          alertText: 'text-[#C2C7AC]',
         },
       }}
       localization={{

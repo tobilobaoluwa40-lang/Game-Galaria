@@ -48,7 +48,7 @@ export function Navbar() {
             <input 
               type="text" 
               placeholder="Search games, consoles..." 
-              className="w-48 lg:w-64 h-9 bg-muted/30 border border-border rounded-full pl-9 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:bg-muted/50 transition-all placeholder:text-muted-foreground"
+              className="w-48 rounded-[10px] border border-border bg-muted/30 pl-9 pr-4 text-sm transition-all placeholder:text-muted-foreground focus:bg-muted/50 focus:outline-none focus:ring-1 focus:ring-primary lg:w-64"
             />
           </div>
 

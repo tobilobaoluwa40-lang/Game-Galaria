@@ -186,7 +186,7 @@ function ProductForm({ editProduct, onClose }: { editProduct?: Product; onClose:
   const set = (key: string, value: string) => setForm((prev) => ({ ...prev, [key]: value }));
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
-    const images = uploadedImages.length ? uploadedImages : [form.image || 'https://placehold.co/600x600/121212/00ffcc?text=New+Product'];
+    const images = uploadedImages.length ? uploadedImages : [form.image || 'https://placehold.co/600x600/1A2525/C2C7AC?text=New+Product'];
     const payload = { name: form.name, category: form.category, platform: form.platform, brand: form.brand, price: Number(form.price), rating: editProduct?.rating || 0, reviewCount: editProduct?.reviewCount || 0, image: images[0], images, badge: form.badge === 'None' ? undefined : form.badge, stock: Number(form.stock), description: form.description, specs: editProduct?.specs || {} };
     if (editProduct) updateProduct(editProduct.id, payload); else addProduct(payload);
     onClose();
