@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { CATALOG_EXPANSION_PRODUCTS } from '@/lib/catalog-expansion';
 import { MOCK_PRODUCTS, PRODUCT_IMAGE_BY_ID, Product } from '@/lib/data';
 import {
   NGN_CURRENCY_VERSION,
@@ -144,6 +145,13 @@ function shouldConvertStoredCurrency(key: string) {
     && localStorage.getItem(key) !== null;
 }
 
+function mergeCatalogProducts(savedProducts: Product[] | null, shouldConvertCurrency: boolean) {
+  if (!savedProducts) return MOCK_PRODUCTS.map((product) => migrateProduct(product, false));
+  const savedIds = new Set(savedProducts.map((product) => product.id));
+  const migratedSavedProducts = savedProducts.map((product) => migrateProduct(product, shouldConvertCurrency));
+  return [...migratedSavedProducts, ...CATALOG_EXPANSION_PRODUCTS.filter((product) => !savedIds.has(product.id))];
+}
+
 interface ShopContextType {
   products: Product[];
   categories: string[];
@@ -185,7 +193,8 @@ const ShopContext = createContext<ShopContextType | undefined>(undefined);
 export function ShopProvider({ children }: { children: ReactNode }) {
   const [products, setProducts] = useState<Product[]>(() => {
     const shouldConvertCurrency = shouldConvertStoredCurrency('gg_products');
-    return stored<Product[]>('gg_products', MOCK_PRODUCTS).map((product) => migrateProduct(product, shouldConvertCurrency));
+    const savedProducts = stored<Product[] | null>('gg_products', null);
+    return mergeCatalogProducts(savedProducts, shouldConvertCurrency);
   });
   const [categories, setCategories] = useState<string[]>(() => {
     const savedCategories = stored<string[]>('gg_categories', defaultCategories);

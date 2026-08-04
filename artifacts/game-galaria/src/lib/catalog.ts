@@ -67,7 +67,7 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
     slug: 'game-pads',
     label: 'Game Pads',
     description: 'Responsive game pads and controllers for precise play.',
-    matches: (product) => normalize(product.category) === 'controllers',
+    matches: (product) => normalize(product.category) === 'game pads',
   },
   {
     slug: 'headsets',

@@ -2,3 +2,4 @@
 - [Admin authentication](admin-authentication.md) — Clerk manages admin sign-in/sign-up; keep the public storefront open and protect `/admin` at the route boundary.
 - [Currency localization](currency-localization.md) — storefront amounts use NGN with one shared formatter and a one-time migration for older saved USD data.
 - [Product image assets](product-image-assets.md) — catalog products use local generated assets with an ID-based migration for previously saved placeholder records.
+- [Catalog expansion](catalog-expansion.md) — category additions use stable generated product records merged into saved browser catalogs without replacing custom admin products.

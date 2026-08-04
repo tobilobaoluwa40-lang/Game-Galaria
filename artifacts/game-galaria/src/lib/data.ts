@@ -1,3 +1,5 @@
+import { CATALOG_EXPANSION_PRODUCTS } from '@/lib/catalog-expansion';
+
 export type Category = string;
 export type Platform = string;
 
@@ -32,7 +34,7 @@ export const PRODUCT_IMAGE_BY_ID: Record<string, string> = {
   '8': productAsset('product-gaming-chair.jpg'),
 };
 
-export const MOCK_PRODUCTS: Product[] = [
+const CORE_PRODUCTS: Product[] = [
   {
     id: '1',
     name: 'PlayStation 5 Console - Disc Edition',
@@ -184,3 +186,5 @@ export const MOCK_PRODUCTS: Product[] = [
     }
   }
 ];
+
+export const MOCK_PRODUCTS: Product[] = [...CORE_PRODUCTS, ...CATALOG_EXPANSION_PRODUCTS];
