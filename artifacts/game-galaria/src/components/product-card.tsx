@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { formatCurrency } from '@/lib/currency';
+import { ProductImage } from '@/components/product-image';
 
 export function ProductCard({ product }: { product: Product }) {
   const { addToCart, toggleWishlist, isInWishlist } = useShop();
@@ -61,9 +62,8 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Image */}
       <Link href={`/product/${product.id}`} className="aspect-square bg-muted/20 relative overflow-hidden flex items-center justify-center p-6">
-        <img 
-          src={product.image} 
-          alt={product.name}
+        <ProductImage
+          product={product}
           className="object-contain w-full h-full transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />

@@ -34,6 +34,30 @@ export const PRODUCT_IMAGE_BY_ID: Record<string, string> = {
   '8': productAsset('product-gaming-chair.jpg'),
 };
 
+const PRODUCT_IMAGE_BY_CATEGORY: Record<string, string> = {
+  consoles: productAsset('catalog-consoles.jpg'),
+  playstation: productAsset('catalog-playstation.jpg'),
+  xbox: productAsset('catalog-xbox.jpg'),
+  nintendo: productAsset('catalog-nintendo.jpg'),
+  'gaming pcs': productAsset('catalog-gaming-pcs.jpg'),
+  games: productAsset('catalog-video-games.jpg'),
+  'video games': productAsset('catalog-video-games.jpg'),
+  accessories: productAsset('catalog-accessories.jpg'),
+  controllers: productAsset('catalog-controllers.jpg'),
+  'game pads': productAsset('catalog-game-pads.jpg'),
+  headsets: productAsset('catalog-headsets.jpg'),
+  keyboards: productAsset('catalog-keyboards.jpg'),
+  chairs: productAsset('catalog-gaming-chairs.jpg'),
+  'gaming chairs': productAsset('catalog-gaming-chairs.jpg'),
+  'gift cards': productAsset('catalog-gift-cards.jpg'),
+};
+
+export function getProductImageFallback(product: Pick<Product, 'id' | 'category'>) {
+  return PRODUCT_IMAGE_BY_ID[product.id]
+    || PRODUCT_IMAGE_BY_CATEGORY[product.category.trim().toLowerCase()]
+    || productAsset('catalog-accessories.jpg');
+}
+
 const CORE_PRODUCTS: Product[] = [
   {
     id: '1',

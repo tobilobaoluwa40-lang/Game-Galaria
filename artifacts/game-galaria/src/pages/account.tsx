@@ -11,6 +11,7 @@ import { useClerk, useUser } from '@clerk/react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { formatCurrency } from '@/lib/currency';
+import { ProductImage } from '@/components/product-image';
 
 export default function Account() {
   const { products, wishlist, orders } = useShop();
@@ -170,7 +171,7 @@ export default function Account() {
                             {order.items.map((item, idx) => (
                               <div key={idx} className="flex gap-4 mb-4 last:mb-0">
                                 <div className="w-16 h-16 bg-muted/20 rounded border flex items-center justify-center p-1 shrink-0">
-                                  <img src={item.product.image} alt={item.product.name} className="w-full h-full object-contain" />
+                                  <ProductImage product={item.product} className="w-full h-full object-contain" />
                                 </div>
                                 <div>
                                   <div className="font-medium text-sm line-clamp-1">{item.product.name}</div>

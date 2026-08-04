@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { CATALOG_EXPANSION_PRODUCTS } from '@/lib/catalog-expansion';
-import { MOCK_PRODUCTS, PRODUCT_IMAGE_BY_ID, Product } from '@/lib/data';
+import { getProductImageFallback, MOCK_PRODUCTS, PRODUCT_IMAGE_BY_ID, Product } from '@/lib/data';
 import {
   NGN_CURRENCY_VERSION,
   NGN_DELIVERY_FEE,
@@ -111,20 +111,30 @@ function migrateProductImage(image: string) {
     : image;
 }
 
+function isPersistableProductImage(image: string) {
+  return image.startsWith('data:image/') || image.startsWith('/') || image.startsWith('http://') || image.startsWith('https://');
+}
+
 function isLegacyProductImage(image: string) {
   return image.startsWith('https://placehold.co/') || image.startsWith(LEGACY_PLACEHOLDER_PREFIX) || image.startsWith(CURRENT_PLACEHOLDER_PREFIX);
 }
 
 function migrateProduct(product: Product, shouldConvertCurrency = false): Product {
   const catalogImage = PRODUCT_IMAGE_BY_ID[product.id];
+  const fallbackImage = getProductImageFallback(product);
+  const image = catalogImage && isLegacyProductImage(product.image)
+    ? catalogImage
+    : isPersistableProductImage(product.image)
+      ? migrateProductImage(product.image)
+      : fallbackImage;
   return {
     ...product,
     price: shouldConvertCurrency ? migrateUsdAmountToNgn(product.price) : product.price,
     compareAtPrice: product.compareAtPrice && shouldConvertCurrency
       ? migrateUsdAmountToNgn(product.compareAtPrice)
       : product.compareAtPrice,
-    image: catalogImage && isLegacyProductImage(product.image) ? catalogImage : migrateProductImage(product.image),
-    images: product.images?.map(migrateProductImage),
+    image,
+    images: product.images?.map((item) => isPersistableProductImage(item) ? migrateProductImage(item) : fallbackImage),
   };
 }
 

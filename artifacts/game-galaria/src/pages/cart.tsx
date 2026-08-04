@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Trash2, Plus, Minus, ArrowRight, Heart, BookmarkPlus } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency, NGN_DELIVERY_FEE, NGN_FREE_DELIVERY_THRESHOLD } from '@/lib/currency';
+import { ProductImage } from '@/components/product-image';
 
 export default function Cart() {
   const { cart, savedForLater, updateQuantity, removeFromCart, getCartTotal, moveToSaved, moveToCart, removeSaved } = useShop();
@@ -46,7 +47,7 @@ export default function Cart() {
                     {cart.map((item) => (
                       <li key={item.product.id} className="p-6 flex flex-col sm:flex-row gap-6">
                         <div className="w-24 h-24 sm:w-32 sm:h-32 shrink-0 bg-muted/20 rounded-lg p-2 flex items-center justify-center border border-border">
-                          <img src={item.product.image} alt={item.product.name} className="w-full h-full object-contain" />
+                          <ProductImage product={item.product} className="w-full h-full object-contain" />
                         </div>
                         
                         <div className="flex-1 flex flex-col">
@@ -159,7 +160,7 @@ export default function Cart() {
                 {savedForLater.map((product) => (
                   <div key={product.id} className="bg-card border border-border rounded-xl p-4 flex flex-col">
                     <div className="aspect-square bg-muted/20 rounded-lg p-4 mb-4 flex items-center justify-center">
-                      <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
+                      <ProductImage product={product} className="w-full h-full object-contain" />
                     </div>
                     <h3 className="font-bold line-clamp-2 mb-2">{product.name}</h3>
                     <div className="font-bold text-primary font-mono mb-4">{formatCurrency(product.price)}</div>

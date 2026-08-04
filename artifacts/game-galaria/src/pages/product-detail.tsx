@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatCurrency } from '@/lib/currency';
 import { resolveCatalogCategory, slugifyCategory } from '@/lib/catalog';
+import { ProductImage } from '@/components/product-image';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -74,9 +75,8 @@ export default function ProductDetail() {
             <div className="space-y-4">
               <div className="aspect-square rounded-2xl bg-card border border-border flex items-center justify-center p-8 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
+                <ProductImage
+                  product={product}
                   className="w-full h-full object-contain relative z-10"
                 />
                 {product.badge && (
@@ -88,7 +88,7 @@ export default function ProductDetail() {
               <div className="grid grid-cols-4 gap-4">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className={`aspect-square rounded-[10px] border flex items-center justify-center p-4 cursor-pointer bg-card ${i === 1 ? 'border-primary shadow-[0_8px_20px_hsl(180_17.5%_12.4%_/_0.3)]' : 'border-border hover:border-primary/50'}`}>
-                    <img src={product.image} alt="" className="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                    <ProductImage product={product} className="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity" />
                   </div>
                 ))}
               </div>

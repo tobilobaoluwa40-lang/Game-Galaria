@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { ShieldCheck, Truck, CreditCard, Banknote, ChevronLeft, CheckCircle2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency, NGN_DELIVERY_FEE, NGN_FREE_DELIVERY_THRESHOLD } from '@/lib/currency';
+import { ProductImage } from '@/components/product-image';
 
 export default function Checkout() {
   const { cart, getCartTotal, createOrder } = useShop();
@@ -198,7 +199,7 @@ export default function Checkout() {
                   {cart.map((item) => (
                     <div key={item.product.id} className="flex gap-4">
                       <div className="w-16 h-16 bg-muted/20 rounded-md p-1 border border-border shrink-0 flex items-center justify-center relative">
-                        <img src={item.product.image} alt={item.product.name} className="w-full h-full object-contain" />
+                        <ProductImage product={item.product} className="w-full h-full object-contain" />
                         <span className="absolute -top-2 -right-2 w-5 h-5 bg-muted rounded-full flex items-center justify-center text-xs font-bold border border-border">
                           {item.quantity}
                         </span>
