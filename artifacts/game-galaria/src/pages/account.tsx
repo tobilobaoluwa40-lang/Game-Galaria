@@ -7,13 +7,60 @@ import { User, Package, Heart, MapPin, Settings, LogOut } from 'lucide-react';
 import { ProductCard } from '@/components/product-card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
+import { useClerk, useUser } from '@clerk/react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'wouter';
 
 export default function Account() {
   const { products, wishlist, orders } = useShop();
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
   const searchParams = new URLSearchParams(window.location.search);
   const defaultTab = searchParams.get('tab') || 'profile';
 
   const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+  const firstName = user?.firstName || 'Gamer';
+  const lastName = user?.lastName || '';
+  const displayName = [firstName, lastName].filter(Boolean).join(' ');
+  const email = user?.primaryEmailAddress?.emailAddress || 'No email address';
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <p className="text-sm text-muted-foreground">Loading your account...</p>
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
+    return (
+      <div className="min-h-screen flex flex-col bg-background">
+        <Navbar />
+        <main className="flex flex-1 items-center justify-center px-4 py-16">
+          <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-8 text-center shadow-xl">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <User className="h-8 w-8" />
+            </div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Your player profile</p>
+            <h1 className="text-3xl font-bold">Access your Game Galaria account</h1>
+            <p className="mt-3 text-muted-foreground">
+              Log in to view orders, save your wishlist, manage addresses, and keep your gaming setup moving.
+            </p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              <Link href="/login">
+                <Button className="w-full">Log in</Button>
+              </Link>
+              <Link href="/register">
+                <Button variant="outline" className="w-full">Create account</Button>
+              </Link>
+            </div>
+            <p className="mt-5 text-xs text-muted-foreground">New accounts are protected with email verification and secure password validation.</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -29,10 +76,10 @@ export default function Account() {
               <div className="w-full md:w-64 shrink-0">
                 <div className="bg-card border border-border rounded-xl p-6 mb-6">
                   <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-xl mb-4">
-                    JD
+                    {`${firstName[0] || ''}${lastName[0] || ''}`.toUpperCase()}
                   </div>
-                  <h2 className="font-bold text-lg">John Doe</h2>
-                  <p className="text-sm text-muted-foreground">gamer@example.com</p>
+                  <h2 className="font-bold text-lg">{displayName}</h2>
+                  <p className="truncate text-sm text-muted-foreground">{email}</p>
                 </div>
 
                 <TabsList className="flex md:flex-col h-auto bg-transparent p-0 w-full overflow-x-auto justify-start border-b md:border-b-0 border-border pb-2 md:pb-0 gap-2">
@@ -53,7 +100,11 @@ export default function Account() {
                   </TabsTrigger>
                 </TabsList>
                 
-                <button className="flex items-center text-muted-foreground hover:text-destructive transition-colors mt-6 px-4 py-2 w-full text-sm font-medium">
+                <button
+                  type="button"
+                  onClick={() => signOut({ redirectUrl: `${window.location.origin}${import.meta.env.BASE_URL}` })}
+                  className="flex items-center text-muted-foreground hover:text-destructive transition-colors mt-6 px-4 py-2 w-full text-sm font-medium"
+                >
                   <LogOut className="w-4 h-4 mr-3" /> Sign Out
                 </button>
               </div>
@@ -65,19 +116,19 @@ export default function Account() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
                     <div className="space-y-2">
                       <label className="text-sm text-muted-foreground font-medium">First Name</label>
-                      <div className="p-3 bg-background border border-border rounded-md">John</div>
+                      <div className="p-3 bg-background border border-border rounded-md">{firstName}</div>
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm text-muted-foreground font-medium">Last Name</label>
-                      <div className="p-3 bg-background border border-border rounded-md">Doe</div>
+                      <div className="p-3 bg-background border border-border rounded-md">{lastName || '—'}</div>
                     </div>
                     <div className="space-y-2 sm:col-span-2">
                       <label className="text-sm text-muted-foreground font-medium">Email</label>
-                      <div className="p-3 bg-background border border-border rounded-md">gamer@example.com</div>
+                      <div className="p-3 bg-background border border-border rounded-md">{email}</div>
                     </div>
                     <div className="space-y-2 sm:col-span-2">
                       <label className="text-sm text-muted-foreground font-medium">Phone</label>
-                      <div className="p-3 bg-background border border-border rounded-md">+1 (555) 123-4567</div>
+                      <div className="p-3 bg-background border border-border rounded-md">{user?.phoneNumbers?.[0]?.phoneNumber || 'Add a phone number in your profile'}</div>
                     </div>
                   </div>
                 </TabsContent>

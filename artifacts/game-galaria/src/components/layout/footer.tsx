@@ -42,6 +42,8 @@ export function Footer() {
             <h3 className="font-semibold mb-4 text-foreground">Customer Service</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><Link href="/account" className="hover:text-primary transition-colors">My Account</Link></li>
+              <li><Link href="/login" className="hover:text-primary transition-colors">Login</Link></li>
+              <li><Link href="/register" className="hover:text-primary transition-colors">Create Account</Link></li>
               <li><Link href="/account?tab=orders" className="hover:text-primary transition-colors">Order Tracking</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Shipping Policy</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Returns & Refunds</Link></li>
@@ -71,7 +73,7 @@ export function Footer() {
           <div className="flex gap-6">
             <Link href="#" className="hover:text-foreground">Privacy Policy</Link>
             <Link href="#" className="hover:text-foreground">Terms of Service</Link>
-            <Link href="/admin" className="hover:text-primary">Admin Login</Link>
+             <Link href="/admin" className="hover:text-primary">Admin Login</Link>
           </div>
         </div>
       </div>

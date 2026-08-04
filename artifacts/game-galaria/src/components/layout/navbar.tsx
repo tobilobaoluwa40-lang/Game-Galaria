@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useShop } from '@/context/shop-context';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@clerk/react';
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cart, wishlist } = useShop();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const cartItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -50,11 +52,28 @@ export function Navbar() {
             />
           </div>
 
-          <Link href="/account">
+          <Link href={isSignedIn ? '/account' : '/login'}>
             <Button variant="ghost" size="icon" className="relative">
               <User className="w-5 h-5" />
             </Button>
           </Link>
+
+          {isLoaded && !isSignedIn && (
+            <div className="hidden items-center gap-2 lg:flex">
+              <Link href="/login">
+                <Button variant="ghost" size="sm">Log in</Button>
+              </Link>
+              <Link href="/register">
+                <Button size="sm">Create account</Button>
+              </Link>
+            </div>
+          )}
+
+          {isLoaded && isSignedIn && (
+            <Link href="/account" className="hidden max-w-28 truncate text-xs font-medium text-muted-foreground hover:text-primary lg:block">
+              {user?.firstName || 'My account'}
+            </Link>
+          )}
           
           <Link href="/account?tab=wishlist">
             <Button variant="ghost" size="icon" className="relative hidden sm:flex">
@@ -111,6 +130,16 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <div className="grid grid-cols-2 gap-2 pt-2">
+              <Link href={isSignedIn ? '/account' : '/login'} onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="outline" className="w-full">{isSignedIn ? 'My account' : 'Log in'}</Button>
+              </Link>
+              {!isSignedIn && (
+                <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button className="w-full">Create account</Button>
+                </Link>
+              )}
+            </div>
             <Link 
               href="/admin"
               className="px-4 py-3 text-sm font-medium text-primary hover:bg-primary/10 rounded-md transition-colors flex items-center justify-between"

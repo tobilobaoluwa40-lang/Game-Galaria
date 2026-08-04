@@ -29,28 +29,46 @@ function stripBase(path: string) {
     : path;
 }
 
-function SignInPage() {
+function SignInScreen({ path, signUpUrl }: { path: string; signUpUrl: string }) {
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-10">
       <SignIn
         routing="path"
-        path={`${basePath}/sign-in`}
-        signUpUrl={`${basePath}/sign-up`}
+        path={path}
+        signUpUrl={signUpUrl}
+        fallbackRedirectUrl={`${basePath}/account`}
       />
     </div>
   );
 }
 
-function SignUpPage() {
+function SignUpScreen({ path, signInUrl }: { path: string; signInUrl: string }) {
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-10">
       <SignUp
         routing="path"
-        path={`${basePath}/sign-up`}
-        signInUrl={`${basePath}/sign-in`}
+        path={path}
+        signInUrl={signInUrl}
+        fallbackRedirectUrl={`${basePath}/account`}
       />
     </div>
   );
+}
+
+function SignInPage() {
+  return <SignInScreen path={`${basePath}/sign-in`} signUpUrl={`${basePath}/register`} />;
+}
+
+function LoginPage() {
+  return <SignInScreen path={`${basePath}/login`} signUpUrl={`${basePath}/register`} />;
+}
+
+function SignUpPage() {
+  return <SignUpScreen path={`${basePath}/sign-up`} signInUrl={`${basePath}/login`} />;
+}
+
+function RegisterPage() {
+  return <SignUpScreen path={`${basePath}/register`} signInUrl={`${basePath}/login`} />;
 }
 
 function ClerkQueryClientCacheInvalidator() {
@@ -79,7 +97,7 @@ function ProtectedAdmin() {
         <Admin />
       </Show>
       <Show when="signed-out">
-        <Redirect to="/sign-in" />
+        <Redirect to="/login" />
       </Show>
     </>
   );
@@ -91,6 +109,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/sign-in/*?" component={SignInPage} />
       <Route path="/sign-up/*?" component={SignUpPage} />
+      <Route path="/login/*?" component={LoginPage} />
+      <Route path="/register/*?" component={RegisterPage} />
       <Route path="/shop" component={Shop} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
@@ -109,8 +129,8 @@ function ClerkApp() {
     <ClerkProvider
       publishableKey={clerkPubKey}
       proxyUrl={clerkProxyUrl}
-      signInUrl={`${basePath}/sign-in`}
-      signUpUrl={`${basePath}/sign-up`}
+      signInUrl={`${basePath}/login`}
+      signUpUrl={`${basePath}/register`}
       appearance={{
         cssLayerName: 'clerk',
         options: {
@@ -148,8 +168,8 @@ function ClerkApp() {
         },
       }}
       localization={{
-        signIn: { start: { title: 'Admin access', subtitle: 'Sign in to manage Game Galaria' } },
-        signUp: { start: { title: 'Create admin details', subtitle: 'Create the account you will use for store operations' } },
+        signIn: { start: { title: 'Welcome back', subtitle: 'Log in to access your Game Galaria account' } },
+        signUp: { start: { title: 'Create your account', subtitle: 'Join Game Galaria and start leveling up your setup' } },
       }}
       routerPush={(to) => setLocation(stripBase(to))}
       routerReplace={(to) => setLocation(stripBase(to), { replace: true })}

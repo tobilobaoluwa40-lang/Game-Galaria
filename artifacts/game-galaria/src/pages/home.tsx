@@ -45,6 +45,12 @@ export default function Home() {
                   </Button>
                 </Link>
               </div>
+              <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <span>New to Game Galaria?</span>
+                <Link href="/register" className="font-semibold text-primary hover:underline">Create your account</Link>
+                <span>or</span>
+                <Link href="/login" className="font-semibold text-foreground hover:text-primary">Log in</Link>
+              </div>
             </div>
           </div>
 
