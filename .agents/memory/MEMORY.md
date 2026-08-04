@@ -1,3 +1,4 @@
 - [Git history recovery](git-history-recovery.md) — local app history and GitHub origin can start unrelated; merge the remote history before Git pane operations.
 - [Admin authentication](admin-authentication.md) — Clerk manages admin sign-in/sign-up; keep the public storefront open and protect `/admin` at the route boundary.
 - [Currency localization](currency-localization.md) — storefront amounts use NGN with one shared formatter and a one-time migration for older saved USD data.
+- [Product image assets](product-image-assets.md) — catalog products use local generated assets with an ID-based migration for previously saved placeholder records.

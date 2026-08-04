@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { MOCK_PRODUCTS, Product } from '@/lib/data';
+import { MOCK_PRODUCTS, PRODUCT_IMAGE_BY_ID, Product } from '@/lib/data';
 import {
   NGN_CURRENCY_VERSION,
   NGN_DELIVERY_FEE,
@@ -102,6 +102,7 @@ function stored<T>(key: string, fallback: T): T {
 
 const LEGACY_PLACEHOLDER_PREFIX = 'https://placehold.co/600x600/121212/00ffcc';
 const CURRENT_PLACEHOLDER_PREFIX = 'https://placehold.co/600x600/1A2525/C2C7AC';
+const PRODUCT_IMAGE_MIGRATION_VERSION = 'v1';
 
 function migrateProductImage(image: string) {
   return image.startsWith(LEGACY_PLACEHOLDER_PREFIX)
@@ -109,14 +110,19 @@ function migrateProductImage(image: string) {
     : image;
 }
 
+function isLegacyProductImage(image: string) {
+  return image.startsWith('https://placehold.co/') || image.startsWith(LEGACY_PLACEHOLDER_PREFIX) || image.startsWith(CURRENT_PLACEHOLDER_PREFIX);
+}
+
 function migrateProduct(product: Product, shouldConvertCurrency = false): Product {
+  const catalogImage = PRODUCT_IMAGE_BY_ID[product.id];
   return {
     ...product,
     price: shouldConvertCurrency ? migrateUsdAmountToNgn(product.price) : product.price,
     compareAtPrice: product.compareAtPrice && shouldConvertCurrency
       ? migrateUsdAmountToNgn(product.compareAtPrice)
       : product.compareAtPrice,
-    image: migrateProductImage(product.image),
+    image: catalogImage && isLegacyProductImage(product.image) ? catalogImage : migrateProductImage(product.image),
     images: product.images?.map(migrateProductImage),
   };
 }
@@ -211,6 +217,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
+    localStorage.setItem('gg_product_image_version', PRODUCT_IMAGE_MIGRATION_VERSION);
     localStorage.setItem('gg_currency_version', NGN_CURRENCY_VERSION);
     localStorage.setItem('gg_products', JSON.stringify(products));
     localStorage.setItem('gg_categories', JSON.stringify(categories));

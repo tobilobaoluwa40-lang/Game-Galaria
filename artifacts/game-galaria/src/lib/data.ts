@@ -19,6 +19,19 @@ export interface Product {
   specs: Record<string, string>;
 }
 
+const productAsset = (filename: string) => `${import.meta.env.BASE_URL}products/${filename}`;
+
+export const PRODUCT_IMAGE_BY_ID: Record<string, string> = {
+  '1': productAsset('product-ps5-console.jpg'),
+  '2': productAsset('product-xbox-console.jpg'),
+  '3': productAsset('product-dualsense-controller.jpg'),
+  '4': productAsset('product-cyberpunk-game.jpg'),
+  '5': productAsset('product-gaming-keyboard.jpg'),
+  '6': productAsset('product-gaming-headset.jpg'),
+  '7': productAsset('product-handheld-console.jpg'),
+  '8': productAsset('product-gaming-chair.jpg'),
+};
+
 export const MOCK_PRODUCTS: Product[] = [
   {
     id: '1',
@@ -29,7 +42,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 750000,
     rating: 4.9,
     reviewCount: 2451,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=PS5+Console',
+    image: PRODUCT_IMAGE_BY_ID['1'],
     badge: 'Top Selling',
     stock: 45,
     description: 'Experience lightning-fast loading with an ultra-high-speed SSD, deeper immersion with support for haptic feedback, adaptive triggers, and 3D Audio.',
@@ -48,7 +61,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 750000,
     rating: 4.8,
     reviewCount: 1842,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=Xbox+Series+X',
+    image: PRODUCT_IMAGE_BY_ID['2'],
     badge: 'Popular',
     stock: 20,
     description: 'The fastest, most powerful Xbox ever. Play thousands of titles from four generations of consoles.',
@@ -68,7 +81,7 @@ export const MOCK_PRODUCTS: Product[] = [
     compareAtPrice: 112500,
     rating: 4.9,
     reviewCount: 3120,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=DualSense',
+    image: PRODUCT_IMAGE_BY_ID['3'],
     badge: 'Deal',
     stock: 150,
     description: 'Discover a deeper, highly immersive gaming experience that brings the action to life in the palms of your hands.',
@@ -87,7 +100,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 90000,
     rating: 4.5,
     reviewCount: 856,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=Cyberpunk+2077',
+    image: PRODUCT_IMAGE_BY_ID['4'],
     stock: 200,
     description: 'An open-world, action-adventure RPG set in the megalopolis of Night City.',
     specs: {
@@ -104,7 +117,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 345000,
     rating: 4.7,
     reviewCount: 412,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=BlackWidow+V4',
+    image: PRODUCT_IMAGE_BY_ID['5'],
     badge: 'New Arrival',
     stock: 35,
     description: 'Advanced mechanical gaming keyboard with Razer Command Dial and dedicated macro keys.',
@@ -123,7 +136,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 525000,
     rating: 4.8,
     reviewCount: 524,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=Arctis+Nova+Pro',
+    image: PRODUCT_IMAGE_BY_ID['6'],
     badge: 'Featured',
     stock: 18,
     description: 'Premium wireless gaming headset with active noise cancellation and hot-swappable batteries.',
@@ -142,7 +155,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 525000,
     rating: 4.9,
     reviewCount: 4210,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=Switch+OLED',
+    image: PRODUCT_IMAGE_BY_ID['7'],
     stock: 80,
     description: 'Play at home on the TV or on-the-go with a vibrant 7-inch OLED screen.',
     specs: {
@@ -160,7 +173,7 @@ export const MOCK_PRODUCTS: Product[] = [
     price: 823500,
     rating: 4.9,
     reviewCount: 1540,
-    image: 'https://placehold.co/600x600/1A2525/C2C7AC?font=Montserrat&text=TITAN+Evo',
+    image: PRODUCT_IMAGE_BY_ID['8'],
     badge: 'Top Selling',
     stock: 12,
     description: 'The most advanced ergonomic gaming chair. Next-generation ergonomics for long gaming sessions.',
