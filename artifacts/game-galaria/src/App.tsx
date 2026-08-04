@@ -40,6 +40,11 @@ function SignInScreen({ path, signUpUrl }: { path: string; signUpUrl: string }) 
         path={path}
         signUpUrl={signUpUrl}
         fallbackRedirectUrl={`${basePath}/account`}
+        appearance={{
+          elements: {
+            footerAction: 'hidden',
+          },
+        }}
       />
     </div>
   );
