@@ -73,7 +73,7 @@ export interface StoreSettings {
   privacy: string;
 }
 
-const defaultCategories = ['Consoles', 'Games', 'Controllers', 'Headsets', 'Keyboards', 'Chairs', 'Accessories', 'Gift Cards'];
+const defaultCategories = ['Consoles', 'Games', 'Controllers', 'Game Pads', 'Headsets', 'Keyboards', 'Chairs', 'Accessories', 'Gift Cards'];
 const defaultCustomers: Customer[] = [
   { id: 'cus-1', name: 'John Doe', email: 'john@example.com', phone: '+1 555 0123', joined: '2026-06-04', status: 'Active', addresses: ['42 Pixel Lane, Austin, TX'], supportRequests: 0 },
   { id: 'cus-2', name: 'Maya Chen', email: 'maya@example.com', phone: '+1 555 0188', joined: '2026-06-18', status: 'Active', addresses: ['18 Arcade Ave, Seattle, WA'], supportRequests: 1 },
@@ -187,7 +187,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     const shouldConvertCurrency = shouldConvertStoredCurrency('gg_products');
     return stored<Product[]>('gg_products', MOCK_PRODUCTS).map((product) => migrateProduct(product, shouldConvertCurrency));
   });
-  const [categories, setCategories] = useState<string[]>(() => stored('gg_categories', defaultCategories));
+  const [categories, setCategories] = useState<string[]>(() => {
+    const savedCategories = stored<string[]>('gg_categories', defaultCategories);
+    return savedCategories.includes('Game Pads') ? savedCategories : [...savedCategories, 'Game Pads'];
+  });
   const [cart, setCart] = useState<CartItem[]>(() => {
     const shouldConvertCurrency = shouldConvertStoredCurrency('gg_cart');
     return migrateCartItems(stored('gg_cart', []), shouldConvertCurrency);

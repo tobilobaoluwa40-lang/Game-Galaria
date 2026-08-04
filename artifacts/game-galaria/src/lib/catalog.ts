@@ -64,6 +64,12 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
     matches: (product) => normalize(product.category) === 'controllers',
   },
   {
+    slug: 'game-pads',
+    label: 'Game Pads',
+    description: 'Responsive game pads and controllers for precise play.',
+    matches: (product) => normalize(product.category) === 'controllers',
+  },
+  {
     slug: 'headsets',
     label: 'Headsets',
     description: 'Hear every callout with immersive gaming audio.',
@@ -105,6 +111,9 @@ export function getCatalogCategory(value?: string | null) {
     accessories: 'accessories',
     'gift-card': 'gift-cards',
     chairs: 'chairs',
+    gamepad: 'game-pads',
+    gamepads: 'game-pads',
+    pads: 'game-pads',
   };
   const normalizedValue = aliases[slugifyCategory(value)] || slugifyCategory(value);
   return CATALOG_CATEGORIES.find(
