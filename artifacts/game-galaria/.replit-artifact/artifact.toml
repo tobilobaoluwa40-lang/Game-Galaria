@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Game Galaria"
+description = "A polished gaming marketplace for consoles, games, accessories, and gadgets with storefront browsing, cart interactions, checkout flow, customer accounts, and admin-ready catalog management."
+version = "1.0.0"
+id = "artifacts/game-galaria"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20382
+
+[services.development]
+run = "pnpm --filter @workspace/game-galaria run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/game-galaria", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/game-galaria/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20382"
+BASE_PATH = "/"

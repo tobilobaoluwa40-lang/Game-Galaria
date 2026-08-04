@@ -1,0 +1,37 @@
+### Game Galaria – Gaming E-commerce Website
+
+Design and develop a modern, responsive **e-commerce website** for **Game Galaria**, a gaming store for consoles, video games, accessories, and gadgets, providing a seamless shopping experience and a powerful admin management system.
+
+#### Customer Features
+
+* Attractive homepage with hero banners, featured categories, new arrivals, top-selling and popular products, deals, reviews, newsletter, gaming news, and social links.
+* Product categories including PS5, PS4, PS3, Xbox, Nintendo, Gaming PCs, handheld consoles, controllers, headsets, keyboards, chairs, accessories, games, and gift cards.
+* Product pages with images, descriptions, prices, stock status, specifications, reviews, related products, wishlist, Add to Cart, and Buy Now.
+* Advanced search and filters by category, brand, price, popularity, and latest products.
+* Shopping cart with quantity updates, remove items, save for later, subtotal, and total calculations.
+* Checkout with shipping details, delivery location, bank transfer, and Cash on Delivery (COD), plus automatic order reference generation.
+* User accounts with registration, login, profile management, saved addresses, order history, and wishlist.
+* Order tracking with statuses: Pending, Confirmed, Processing, Shipped, Out for Delivery, Delivered, and Cancelled.
+* Floating WhatsApp chat button for instant customer support.
+
+#### Admin Dashboard
+
+* Dashboard showing products, orders, customers, revenue, low stock alerts, sales charts, and best-selling products.
+* Product management: add, edit, delete products, upload images, update stock, pricing, and assign tags like New Arrival, Top Selling, Popular, Featured, and Deals.
+* Category management.
+* Order management with status updates, invoices, approvals, and notifications.
+* Customer management and support tracking.
+* Inventory monitoring with stock alerts and restocking.
+* Promotions, coupons, homepage banners, and featured products.
+* Reports for sales, revenue, customer growth, product performance, and inventory.
+* Website settings for logo, contact information, delivery fees, payment instructions, policies, and social media links.
+
+#### Technical Requirements
+
+* Modern, mobile-responsive UI/UX.
+* Secure authentication with Admin and Customer roles.
+* SEO optimization and fast performance.
+* Secure checkout and order management.
+* Smooth animations, responsive product gallery, and intuitive navigation.
+
+The goal is to create a professional gaming e-commerce platform similar to leading online stores, giving customers an excellent shopping experience while allowing administrators full control over products, inventory, orders, customers, and sales.
