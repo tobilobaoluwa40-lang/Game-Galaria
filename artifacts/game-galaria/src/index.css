@@ -125,8 +125,53 @@
   --destructive-border: hsl(var(--destructive));
 }
 
+.light {
+  --background: 72 33% 97%;
+  --foreground: 160 20% 16%;
+
+  --border: 80 15% 82%;
+  --input: 80 15% 82%;
+  --ring: 78 24% 38%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 160 20% 16%;
+  --card-border: 80 15% 82%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 160 20% 16%;
+  --popover-border: 80 15% 82%;
+
+  --primary: 78 24% 38%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 80 20% 88%;
+  --secondary-foreground: 160 20% 16%;
+
+  --muted: 80 20% 92%;
+  --muted-foreground: 158 11% 38%;
+
+  --accent: 80 24% 84%;
+  --accent-foreground: 160 20% 16%;
+  --destructive: 4 55% 45%;
+  --destructive-foreground: 0 0% 100%;
+
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 160 20% 16%;
+  --sidebar-border: 80 15% 82%;
+  --sidebar-primary: 78 24% 38%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 80 20% 92%;
+  --sidebar-accent-foreground: 160 20% 16%;
+  --sidebar-ring: 78 24% 38%;
+  --primary-border: hsl(var(--primary));
+  --secondary-border: hsl(var(--secondary));
+  --muted-border: hsl(var(--muted));
+  --accent-border: hsl(var(--accent));
+  --destructive-border: hsl(var(--destructive));
+}
+
 .dark {
-  /* Using the exact same theme for light and dark since it's a dark gaming theme natively */
+  /* Dark mode uses the native Game Galaria forest palette above. */
 }
 
 @layer base {
@@ -139,8 +184,8 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     background-image:
-      radial-gradient(circle at 15% 0%, hsl(77 16.2% 37.5% / 0.12), transparent 34rem),
-      radial-gradient(circle at 90% 15%, hsl(56.6 14.2% 51.6% / 0.07), transparent 28rem);
+      radial-gradient(circle at 15% 0%, hsl(var(--primary) / 0.12), transparent 34rem),
+      radial-gradient(circle at 90% 15%, hsl(var(--accent) / 0.07), transparent 28rem);
   }
   button,
   [role='button'],
@@ -170,7 +215,7 @@
   text-shadow: 0 0 16px hsl(var(--primary) / 0.35);
 }
 .neon-box {
-  box-shadow: 0 18px 60px hsl(180 17.5% 12.4% / 0.4), inset 0 0 24px hsl(var(--primary) / 0.08);
+  box-shadow: 0 18px 60px hsl(var(--foreground) / 0.12), inset 0 0 24px hsl(var(--primary) / 0.08);
   border: 1px solid hsl(var(--primary) / 0.3);
 }
 
@@ -204,7 +249,7 @@
   }
   .cta-button:hover:not(:disabled) {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 12px 26px hsl(180 17.5% 12.4% / 0.35);
+    box-shadow: 0 12px 26px hsl(var(--foreground) / 0.18);
   }
   .cta-button:active:not(:disabled) {
     transform: translateY(0) scale(0.99);

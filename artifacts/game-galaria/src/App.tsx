@@ -7,6 +7,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import { Link, Redirect, Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import { ShopProvider } from '@/context/shop-context';
+import { ThemeProvider, useTheme as useGameTheme } from '@/context/theme-context';
 import Home from '@/pages/home';
 import Shop from '@/pages/shop';
 import ProductDetail from '@/pages/product-detail';
@@ -60,7 +61,7 @@ function SignUpScreen({ path, signInUrl }: { path: string; signInUrl: string }) 
           signInUrl={signInUrl}
           fallbackRedirectUrl={`${basePath}/account`}
         />
-        <p className="mx-auto -mt-5 max-w-[360px] px-4 text-center text-xs leading-5 text-[#959372]">
+        <p className="mx-auto -mt-5 max-w-[360px] px-4 text-center text-xs leading-5 text-muted-foreground">
           Use a unique password you have not used on another website. Avoid common or previously exposed passwords; Clerk blocks compromised passwords to help protect your account.
         </p>
       </div>
@@ -130,21 +131,21 @@ function PasswordLoginScreen() {
 
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background px-4 py-10">
-      <div className="w-full max-w-[440px] overflow-hidden rounded-[10px] border border-[#323D39] bg-[#1A2525] shadow-2xl">
+      <div className="w-full max-w-[440px] overflow-hidden rounded-[10px] border border-border bg-card shadow-2xl">
         <div className="px-6 pb-7 pt-8 sm:px-10">
           <Link href="/" className="mx-auto mb-6 flex w-fit items-center gap-2">
             <img src={`${basePath}/logo.svg`} alt="Game Galaria" className="h-8 w-auto" />
           </Link>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-[#C2C7AC]">Welcome back</h1>
-            <p className="mt-2 text-sm text-[#959372]">Log in to access your Game Galaria account</p>
+            <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
+            <p className="mt-2 text-sm text-muted-foreground">Log in to access your Game Galaria account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
             <div className="space-y-2">
-              <label htmlFor="login-email" className="text-sm font-medium text-[#C2C7AC]">Email address</label>
+               <label htmlFor="login-email" className="text-sm font-medium text-foreground">Email address</label>
               <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#666F50]" />
+                 <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="login-email"
                   name="email"
@@ -154,18 +155,18 @@ function PasswordLoginScreen() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="Enter your email address"
-                  className="h-11 border-[#323D39] bg-[#1E2A26] pl-10 text-[#C2C7AC] placeholder:text-[#959372]"
+                   className="h-11 border-border bg-background pl-10 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-3">
-                <label htmlFor="login-password" className="text-sm font-medium text-[#C2C7AC]">Password</label>
+                 <label htmlFor="login-password" className="text-sm font-medium text-foreground">Password</label>
                 <Link href="/sign-in" className="text-xs font-medium text-primary hover:underline">Forgot password?</Link>
               </div>
               <div className="relative">
-                <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#666F50]" />
+                 <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="login-password"
                   name="password"
@@ -175,13 +176,13 @@ function PasswordLoginScreen() {
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   placeholder="Enter your password"
-                  className="h-11 border-[#323D39] bg-[#1E2A26] pl-10 pr-11 text-[#C2C7AC] placeholder:text-[#959372]"
+                   className="h-11 border-border bg-background pl-10 pr-11 text-foreground placeholder:text-muted-foreground"
                 />
                 <button
                   type="button"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                   onClick={() => setShowPassword((visible) => !visible)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#666F50] hover:text-[#C2C7AC]"
+                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -189,7 +190,7 @@ function PasswordLoginScreen() {
             </div>
 
             {errorMessage && (
-              <p role="alert" className="rounded-lg border border-[#959372]/50 bg-[#959372]/10 px-3 py-2 text-sm text-[#C2C7AC]">
+               <p role="alert" className="rounded-lg border border-accent/50 bg-accent/10 px-3 py-2 text-sm text-foreground">
                 {errorMessage}
               </p>
             )}
@@ -199,12 +200,12 @@ function PasswordLoginScreen() {
             </Button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-[#959372]">
+           <p className="mt-6 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{' '}
             <Link href="/register" className="font-semibold text-primary hover:underline">Create account</Link>
           </p>
         </div>
-        <div className="border-t border-[#323D39] px-6 py-4 text-center text-xs text-[#959372]">
+        <div className="border-t border-border px-6 py-4 text-center text-xs text-muted-foreground">
           Your password is sent securely to Clerk and never stored by Game Galaria.
         </div>
       </div>
@@ -269,6 +270,7 @@ function Router() {
       <Route path="/login/*?" component={LoginPage} />
       <Route path="/register/*?" component={RegisterPage} />
       <Route path="/shop" component={Shop} />
+      <Route path="/shop/:category" component={Shop} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
@@ -281,6 +283,26 @@ function Router() {
 
 function ClerkApp() {
   const [, setLocation] = useLocation();
+  const { theme } = useGameTheme();
+  const clerkColors = theme === 'dark'
+    ? {
+        foreground: '#C2C7AC',
+        mutedForeground: '#959372',
+        background: '#1A2525',
+        input: '#1E2A26',
+        neutral: '#323D39',
+        primary: '#838C6D',
+        primaryForeground: '#1A2525',
+      }
+    : {
+        foreground: '#24332D',
+        mutedForeground: '#5C6B5D',
+        background: '#FFFFFF',
+        input: '#F6F8F0',
+        neutral: '#D7DDCC',
+        primary: '#65734E',
+        primaryForeground: '#FFFFFF',
+      };
 
   return (
     <ClerkProvider
@@ -296,32 +318,32 @@ function ClerkApp() {
           logoImageUrl: `${window.location.origin}${basePath}/logo.svg`,
         },
         variables: {
-          colorPrimary: '#838C6D',
-          colorForeground: '#C2C7AC',
-          colorMutedForeground: '#959372',
-          colorDanger: '#959372',
-          colorBackground: '#1A2525',
-          colorInput: '#1E2A26',
-          colorInputForeground: '#C2C7AC',
-          colorNeutral: '#323D39',
+           colorPrimary: clerkColors.primary,
+           colorForeground: clerkColors.foreground,
+           colorMutedForeground: clerkColors.mutedForeground,
+           colorDanger: clerkColors.mutedForeground,
+           colorBackground: clerkColors.background,
+           colorInput: clerkColors.input,
+           colorInputForeground: clerkColors.foreground,
+           colorNeutral: clerkColors.neutral,
           fontFamily: 'Outfit, sans-serif',
           borderRadius: '10px',
         },
         elements: {
           rootBox: 'w-full flex justify-center',
-          cardBox: 'bg-[#1A2525] border border-[#323D39] rounded-[10px] w-[440px] max-w-full overflow-hidden',
-          card: '!shadow-none !border-0 !bg-transparent',
-          footer: '!shadow-none !border-0 !bg-transparent',
-          headerTitle: 'text-[#C2C7AC]',
-          headerSubtitle: 'text-[#959372]',
-          formFieldLabel: 'text-[#C2C7AC]',
-          formFieldInput: 'bg-[#1E2A26] border-[#323D39] text-[#C2C7AC]',
-          formButtonPrimary: 'bg-[#838C6D] text-[#1A2525] hover:bg-[#959372]',
-          footerActionLink: 'text-[#838C6D]',
-          footerActionText: 'text-[#959372]',
-          dividerText: 'text-[#959372]',
-          socialButtonsBlockButtonText: 'text-[#C2C7AC]',
-          alertText: 'text-[#C2C7AC]',
+           cardBox: 'bg-card border border-border rounded-[10px] w-[440px] max-w-full overflow-hidden',
+           card: '!shadow-none !border-0 !bg-transparent',
+           footer: '!shadow-none !border-0 !bg-transparent',
+           headerTitle: 'text-foreground',
+           headerSubtitle: 'text-muted-foreground',
+           formFieldLabel: 'text-foreground',
+           formFieldInput: 'bg-background border-border text-foreground',
+           formButtonPrimary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+           footerActionLink: 'text-primary',
+           footerActionText: 'text-muted-foreground',
+           dividerText: 'text-muted-foreground',
+           socialButtonsBlockButtonText: 'text-foreground',
+           alertText: 'text-foreground',
         },
       }}
       localization={{
@@ -349,9 +371,11 @@ function ClerkApp() {
 function App() {
   return (
     <WouterRouter base={basePath}>
-      <ShopProvider>
-        <ClerkApp />
-      </ShopProvider>
+      <ThemeProvider>
+        <ShopProvider>
+          <ClerkApp />
+        </ShopProvider>
+      </ThemeProvider>
     </WouterRouter>
   );
 }

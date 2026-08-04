@@ -10,10 +10,11 @@ import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatCurrency } from '@/lib/currency';
+import { resolveCatalogCategory, slugifyCategory } from '@/lib/catalog';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const { products, addToCart, toggleWishlist, isInWishlist } = useShop();
+  const { products, categories, addToCart, toggleWishlist, isInWishlist } = useShop();
   const product = products.find(p => p.id === id);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
@@ -62,7 +63,7 @@ export default function ProductDetail() {
             <span>/</span>
             <Link href="/shop" className="hover:text-foreground transition-colors">Shop</Link>
             <span>/</span>
-            <Link href={`/shop?category=${product.category}`} className="hover:text-foreground transition-colors">{product.category}</Link>
+            <Link href={`/shop/${resolveCatalogCategory(product.category, categories)?.slug || slugifyCategory(product.category)}`} className="hover:text-foreground transition-colors">{product.category}</Link>
             <span>/</span>
             <span className="text-foreground font-medium truncate max-wxs">{product.name}</span>
           </div>

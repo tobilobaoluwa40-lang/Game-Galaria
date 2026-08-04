@@ -30,7 +30,7 @@ const heroSlides = [
     image: `${basePath}/hero-console.jpg`,
     alt: 'Premium gaming console and controller on a desk',
     primaryLabel: 'Shop consoles',
-    primaryHref: '/shop?category=Consoles',
+    primaryHref: '/shop/consoles',
     secondaryLabel: 'View all gear',
     secondaryHref: '/shop',
   },
@@ -41,9 +41,9 @@ const heroSlides = [
     image: `${basePath}/hero-pc-setup.jpg`,
     alt: 'Gaming PC setup with keyboard and headset',
     primaryLabel: 'Explore accessories',
-    primaryHref: '/shop?category=Accessories',
+    primaryHref: '/shop/accessories',
     secondaryLabel: 'Shop PC parts',
-    secondaryHref: '/shop?category=PC%20Parts',
+    secondaryHref: '/shop/gaming-pcs',
   },
   {
     eyebrow: 'Play wherever you are',
@@ -52,9 +52,9 @@ const heroSlides = [
     image: `${basePath}/hero-handheld.jpg`,
     alt: 'Handheld gaming console on a desk',
     primaryLabel: 'Shop handhelds',
-    primaryHref: '/shop?category=Consoles',
+    primaryHref: '/shop/consoles',
     secondaryLabel: 'Browse new arrivals',
-    secondaryHref: '/shop?badge=New%20Arrival',
+    secondaryHref: '/shop',
   },
 ];
 
@@ -231,7 +231,7 @@ export default function Home() {
             <div className="container mx-auto px-4">
               <div className="mb-10 flex items-end justify-between">
                 <div>
-                  <h2 className="mb-2 text-3xl font-bold tracking-tight text-[#C2C7AC]">Browse by Category</h2>
+                  <h2 className="mb-2 text-3xl font-bold tracking-tight">Browse by Category</h2>
                   <p className="text-muted-foreground">Find exactly what you need for your setup</p>
                 </div>
                 <Link href="/shop" className="hidden items-center text-primary hover:text-primary/80 sm:flex">
@@ -239,16 +239,16 @@ export default function Home() {
                 </Link>
               </div>
               <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-                {[
-                  { name: 'Consoles', icon: Gamepad2, count: 24 },
-                  { name: 'Games', icon: MonitorPlay, count: 156 },
-                  { name: 'Accessories', icon: Keyboard, count: 89 },
-                  { name: 'Headsets', icon: Headphones, count: 42 },
-                  { name: 'PC Parts', icon: Cpu, count: 112 },
+                  {[
+                   { name: 'Consoles', slug: 'consoles', icon: Gamepad2, count: 24 },
+                   { name: 'Video Games', slug: 'video-games', icon: MonitorPlay, count: 156 },
+                   { name: 'Accessories', slug: 'accessories', icon: Keyboard, count: 89 },
+                   { name: 'Headsets', slug: 'headsets', icon: Headphones, count: 42 },
+                   { name: 'Gaming PCs', slug: 'gaming-pcs', icon: Cpu, count: 112 },
                 ].map((category, index) => (
                   <Reveal key={category.name} delay={index * 70}>
                     <Link
-                      href={`/shop?category=${category.name}`}
+                      href={`/shop/${category.slug}`}
                       className="group flex h-full flex-col items-center justify-center rounded-[10px] border border-border bg-card p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:bg-primary/10 hover:shadow-xl"
                     >
                       <category.icon className="mb-4 h-10 w-10 text-muted-foreground transition-colors group-hover:text-primary" />

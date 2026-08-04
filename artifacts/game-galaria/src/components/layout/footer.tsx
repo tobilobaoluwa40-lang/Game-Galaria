@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { Gamepad2, Twitter, Instagram, Youtube, Twitch } from 'lucide-react';
+import { CATALOG_CATEGORIES } from '@/lib/catalog';
 
 export function Footer() {
   return (
@@ -20,22 +21,21 @@ export function Footer() {
               Your ultimate destination for the latest games, top-tier consoles, and elite gaming gear. Upgrade your setup today.
             </p>
             <div className="flex gap-4 pt-2">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-5 h-5" /></a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-5 h-5" /></a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitch className="w-5 h-5" /></a>
+              <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="Game Galaria on X" className="text-muted-foreground hover:text-primary transition-colors"><Twitter className="w-5 h-5" /></a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Game Galaria on Instagram" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-5 h-5" /></a>
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="Game Galaria on YouTube" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-5 h-5" /></a>
+              <a href="https://twitch.tv" target="_blank" rel="noreferrer" aria-label="Game Galaria on Twitch" className="text-muted-foreground hover:text-primary transition-colors"><Twitch className="w-5 h-5" /></a>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-foreground">Shop Categories</h3>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link href="/shop?category=Consoles" className="hover:text-primary transition-colors">Consoles & Hardware</Link></li>
-              <li><Link href="/shop?category=Games" className="hover:text-primary transition-colors">Video Games</Link></li>
-              <li><Link href="/shop?category=Accessories" className="hover:text-primary transition-colors">Accessories & Gadgets</Link></li>
-              <li><Link href="/shop?category=Chairs" className="hover:text-primary transition-colors">Gaming Chairs</Link></li>
-              <li><Link href="/shop?badge=Deal" className="hover:text-primary transition-colors">Hot Deals</Link></li>
+            <h3 className="mb-4 font-semibold text-foreground">Shop Categories</h3>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm text-muted-foreground">
+              {CATALOG_CATEGORIES.slice(0, 8).map((category) => (
+                <li key={category.slug}><Link href={`/shop/${category.slug}`} className="transition-colors hover:text-primary">{category.label}</Link></li>
+              ))}
             </ul>
+            <Link href="/shop" className="mt-4 inline-block text-sm font-semibold text-primary transition-colors hover:text-foreground">View all products</Link>
           </div>
 
           <div>
@@ -45,9 +45,9 @@ export function Footer() {
               <li><Link href="/login" className="hover:text-primary transition-colors">Login</Link></li>
               <li><Link href="/register" className="hover:text-primary transition-colors">Create Account</Link></li>
               <li><Link href="/account?tab=orders" className="hover:text-primary transition-colors">Order Tracking</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Shipping Policy</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Returns & Refunds</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Contact Us</Link></li>
+              <li><Link href="/shop" className="transition-colors hover:text-primary">Shipping Policy</Link></li>
+              <li><Link href="/account?tab=orders" className="transition-colors hover:text-primary">Returns & Refunds</Link></li>
+              <li><a href="mailto:support@gamegalaria.com" className="transition-colors hover:text-primary">Contact Us</a></li>
             </ul>
           </div>
 
@@ -71,9 +71,9 @@ export function Footer() {
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} Game Galaria. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-foreground">Privacy Policy</Link>
-            <Link href="#" className="hover:text-foreground">Terms of Service</Link>
-             <Link href="/admin" className="hover:text-primary">Admin Login</Link>
+            <Link href="/account" className="hover:text-foreground">Privacy Policy</Link>
+            <Link href="/account" className="hover:text-foreground">Terms of Service</Link>
+            <Link href="/admin" className="hover:text-primary">Admin Login</Link>
           </div>
         </div>
       </div>
